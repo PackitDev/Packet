@@ -121,19 +121,22 @@ export default function PricingPage() {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="py-24">
+      <section className="py-32 min-h-[60vh] flex items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-5xl sm:text-6xl font-bold mb-6">
-              Simple, <span className="gradient-text">Transparent</span> Pricing
+            <h1 className="text-huge font-black mb-8 tracking-tighter leading-none">
+              SIMPLE.
+              <br />
+              <span className="gradient-text">TRANSPARENT.</span>
+              <br />
+              PRICING.
             </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-              Pay once, own forever. No subscriptions, no hidden fees. 
-              Get early access now and save on all future versions.
+            <p className="text-2xl sm:text-3xl text-white/70 max-w-3xl mx-auto font-bold uppercase tracking-wide leading-relaxed">
+              PAY ONCE. OWN FOREVER.<br />NO SUBSCRIPTIONS. NO HIDDEN FEES.
             </p>
           </motion.div>
         </div>

@@ -1,19 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply bg-slate-950 text-white antialiased;
+    @apply bg-black text-white antialiased font-body;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold;
   }
 }
 
 @layer utilities {
   .gradient-text {
-    @apply bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 bg-clip-text text-transparent;
   }
   
-  .gradient-border {
-    @apply relative before:absolute before:inset-0 before:rounded-lg before:p-[1px] before:bg-gradient-to-r before:from-blue-500 before:via-cyan-500 before:to-teal-500;
+  .gradient-text-alt {
+    @apply bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent;
+  }
+  
+  .text-huge {
+    @apply text-6xl sm:text-7xl lg:text-8xl xl:text-9xl;
+  }
+  
+  .text-mega {
+    @apply text-5xl sm:text-6xl lg:text-7xl xl:text-8xl;
   }
 }

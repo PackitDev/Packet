@@ -6,70 +6,70 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 w-full bg-slate-950/80 backdrop-blur-lg border-b border-slate-800 z-50">
+    <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-xl border-b-2 border-white/10 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-2 rounded-lg group-hover:scale-110 transition-transform">
-              <Zap className="w-5 h-5 text-white" />
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="bg-gradient-to-br from-yellow-400 via-orange-500 to-pink-500 p-3 rounded-2xl group-hover:scale-110 transition-transform shadow-lg">
+              <Zap className="w-6 h-6 text-black" />
             </div>
-            <span className="text-xl font-bold gradient-text">Effec-t</span>
+            <span className="text-2xl font-black gradient-text uppercase tracking-tight">EFFEC-T</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-slate-300 hover:text-white transition-colors">
+          <div className="hidden md:flex items-center space-x-10">
+            <Link to="/" className="text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide text-sm">
               Home
             </Link>
-            <Link to="/pricing" className="text-slate-300 hover:text-white transition-colors">
+            <Link to="/pricing" className="text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide text-sm">
               Pricing
             </Link>
-            <Link to="/docs" className="text-slate-300 hover:text-white transition-colors">
+            <Link to="/docs" className="text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide text-sm">
               Docs
             </Link>
             <a
               href="https://github.com/effec-t/sdk"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-300 hover:text-white transition-colors"
+              className="text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide text-sm"
             >
               GitHub
             </a>
-            <button className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all">
-              Get Started
+            <button className="bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-8 py-3 rounded-full font-black uppercase tracking-wide text-sm hover:scale-105 transition-transform shadow-lg">
+              Get Started →
             </button>
           </div>
 
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-slate-300 hover:text-white"
+            className="md:hidden text-white hover:text-yellow-400 transition-colors"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 space-y-4">
+          <div className="md:hidden py-6 space-y-6 border-t-2 border-white/10">
             <Link
               to="/"
-              className="block text-slate-300 hover:text-white transition-colors"
+              className="block text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide"
               onClick={() => setIsOpen(false)}
             >
               Home
             </Link>
             <Link
               to="/pricing"
-              className="block text-slate-300 hover:text-white transition-colors"
+              className="block text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide"
               onClick={() => setIsOpen(false)}
             >
               Pricing
             </Link>
             <Link
               to="/docs"
-              className="block text-slate-300 hover:text-white transition-colors"
+              className="block text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide"
               onClick={() => setIsOpen(false)}
             >
               Docs
@@ -78,12 +78,12 @@ export default function Navbar() {
               href="https://github.com/effec-t/sdk"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-slate-300 hover:text-white transition-colors"
+              className="block text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide"
             >
               GitHub
             </a>
-            <button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-2 rounded-lg font-semibold">
-              Get Started
+            <button className="w-full bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-8 py-4 rounded-full font-black uppercase tracking-wide">
+              Get Started →
             </button>
           </div>
         )}
