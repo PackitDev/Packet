@@ -1,20 +1,19 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { eq, and } from 'drizzle-orm';
-import { nanoid } from 'nanoid';
 import { z } from 'zod';
-import { db, licenses, users, versions, machineActivations } from '../db/index.js';
+import { db, licenses, versions, machineActivations } from '../db/index.js';
 
 const router = Router();
 
 // Validate license
-router.post('/validate', async (req, res) => {
+router.post('/validate', async (req: Request, res: Response) => {
   try {
     const schema = z.object({
       key: z.string(),
       version: z.string(),
     });
 
-    const { key, version } = schema.parse(req.body);
+    const { key } = schema.parse(req.body);
 
     const license = await db.query.licenses.findFirst({
       where: eq(licenses.key, key),
@@ -38,23 +37,23 @@ router.post('/validate', async (req, res) => {
     }
 
     const versionInfo = await db.query.versions.findFirst({
-      where: eq(versions.version, version),
+      where: eq(versions.version, license.version),
     });
 
-    res.json({
+    return res.json({
       valid: true,
       license: {
         key: license.key,
         version: license.version,
         status: license.status,
         isEarlyAccess: license.isEarlyAccess,
-        activations: license.activations,
+        activations: license.activations || 0,
         maxActivations: 3,
       },
       version: versionInfo,
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       valid: false,
       error: error instanceof Error ? error.message : 'Validation failed',
     });
@@ -62,7 +61,7 @@ router.post('/validate', async (req, res) => {
 });
 
 // Activate license
-router.post('/activate', async (req, res) => {
+router.post('/activate', async (req: Request, res: Response) => {
   try {
     const schema = z.object({
       key: z.string(),
@@ -100,7 +99,8 @@ router.post('/activate', async (req, res) => {
 
     if (!existingActivation) {
       // Check activation limit
-      if (license.activations >= 3) {
+      const currentActivations = license.activations || 0;
+      if (currentActivations >= 3) {
         return res.status(403).json({
           success: false,
           error: 'Maximum activations reached (3)',
@@ -116,23 +116,23 @@ router.post('/activate', async (req, res) => {
       // Increment activation count
       await db
         .update(licenses)
-        .set({ activations: license.activations + 1 })
+        .set({ activations: currentActivations + 1 })
         .where(eq(licenses.id, license.id));
     }
 
-    res.json({
+    return res.json({
       success: true,
       license: {
         key: license.key,
         version: license.version,
         status: license.status,
         isEarlyAccess: license.isEarlyAccess,
-        activations: license.activations + (existingActivation ? 0 : 1),
+        activations: (license.activations || 0) + (existingActivation ? 0 : 1),
         maxActivations: 3,
       },
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       error: error instanceof Error ? error.message : 'Activation failed',
     });
@@ -140,7 +140,7 @@ router.post('/activate', async (req, res) => {
 });
 
 // Get accessible versions for a license
-router.get('/:key/versions', async (req, res) => {
+router.get('/:key/versions', async (req: Request, res: Response) => {
   try {
     const { key } = req.params;
 
@@ -155,9 +155,9 @@ router.get('/:key/versions', async (req, res) => {
     // Return versions accessible with this license
     const accessibleVersions = [license.version];
 
-    res.json({ versions: accessibleVersions });
+    return res.json({ versions: accessibleVersions });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to get versions',
     });
   }

@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { eq, desc } from 'drizzle-orm';
 import { db, versions } from '../db/index.js';
 
 const router = Router();
 
 // Get current version
-router.get('/current', async (req, res) => {
+router.get('/current', async (_req: Request, res: Response) => {
   try {
     const currentVersion = await db.query.versions.findFirst({
       where: eq(versions.status, 'current'),
@@ -16,16 +16,16 @@ router.get('/current', async (req, res) => {
       return res.status(404).json({ error: 'No current version found' });
     }
 
-    res.json({ version: currentVersion.version });
+    return res.json({ version: currentVersion.version });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to get current version',
     });
   }
 });
 
 // Get version status
-router.get('/:version/status', async (req, res) => {
+router.get('/:version/status', async (req: Request, res: Response) => {
   try {
     const { version } = req.params;
 
@@ -37,19 +37,19 @@ router.get('/:version/status', async (req, res) => {
       return res.status(404).json({ error: 'Version not found' });
     }
 
-    res.json({
+    return res.json({
       status: versionInfo.status,
       features: versionInfo.features,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to get version status',
     });
   }
 });
 
 // Get version info
-router.get('/:version', async (req, res) => {
+router.get('/:version', async (req: Request, res: Response) => {
   try {
     const { version } = req.params;
 
@@ -61,9 +61,9 @@ router.get('/:version', async (req, res) => {
       return res.status(404).json({ error: 'Version not found' });
     }
 
-    res.json(versionInfo);
+    return res.json(versionInfo);
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to get version info',
     });
   }

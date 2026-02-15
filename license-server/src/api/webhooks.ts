@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { nanoid } from 'nanoid';
 import { handleWebhook } from '../stripe/payments.js';
 import { db, users, licenses } from '../db/index.js';
 
 const router = Router();
 
-router.post('/stripe', async (req, res) => {
+router.post('/stripe', async (req: Request, res: Response) => {
   try {
     const signature = req.headers['stripe-signature'] as string;
 
@@ -65,10 +65,10 @@ router.post('/stripe', async (req, res) => {
         console.log(`Unhandled event type: ${event.type}`);
     }
 
-    res.json({ received: true });
+    return res.json({ received: true });
   } catch (error) {
     console.error('Webhook error:', error);
-    res.status(400).json({
+    return res.status(400).json({
       error: error instanceof Error ? error.message : 'Webhook processing failed',
     });
   }
