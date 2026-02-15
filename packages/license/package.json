@@ -1,0 +1,22 @@
+{
+  "name": "@effec-t/license",
+  "version": "1.0.0-beta.1",
+  "description": "License validation for Effec-t SDK",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "node-machine-id": "^1.1.12"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  }
+}

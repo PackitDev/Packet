@@ -1,0 +1,28 @@
+{
+  "name": "@effec-t/db",
+  "version": "1.0.0-beta.1",
+  "description": "Database abstraction for Effec-t SDK",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@effec-t/core": "workspace:*",
+    "drizzle-orm": "^0.29.3",
+    "postgres": "^3.4.3",
+    "mysql2": "^3.9.1",
+    "better-sqlite3": "^9.4.0",
+    "mongodb": "^6.3.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.9",
+    "drizzle-kit": "^0.20.14",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  }
+}

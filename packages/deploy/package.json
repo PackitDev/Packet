@@ -1,0 +1,24 @@
+{
+  "name": "@effec-t/deploy",
+  "version": "1.0.0-beta.1",
+  "description": "Deployment utilities for Effec-t SDK",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@effec-t/core": "workspace:*",
+    "execa": "^8.0.1",
+    "dockerode": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/dockerode": "^3.3.25",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  }
+}

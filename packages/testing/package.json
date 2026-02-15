@@ -1,0 +1,24 @@
+{
+  "name": "@effec-t/testing",
+  "version": "1.0.0-beta.1",
+  "description": "Testing framework for Effec-t SDK",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@effec-t/core": "workspace:*",
+    "vitest": "^1.2.2",
+    "supertest": "^6.3.4"
+  },
+  "devDependencies": {
+    "@types/supertest": "^6.0.2",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  }
+}
