@@ -4,7 +4,8 @@ import type { AuthConfig, AuthRequest } from './types.js';
 export function createAuthMiddleware(config: AuthConfig) {
   return async (req: AuthRequest, _res: unknown, next: () => void) => {
     if (config.provider === 'jwt') {
-      const authHeader = req.headers?.['authorization'] as string | undefined;
+      const headers = req.headers as unknown as Record<string, string>;
+      const authHeader = headers['authorization'];
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return next();
       }

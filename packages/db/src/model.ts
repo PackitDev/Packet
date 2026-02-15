@@ -56,9 +56,10 @@ export function createModel<T extends Record<string, unknown>>(
         ...existing,
         ...data,
         updatedAt: new Date(),
-      } as T;
-      store.set(id, updated);
-      return updated;
+      };
+      const typedUpdated = updated as T;
+      store.set(id, typedUpdated);
+      return typedUpdated;
     },
 
     async delete(id: string): Promise<boolean> {

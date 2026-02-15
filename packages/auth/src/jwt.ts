@@ -10,14 +10,15 @@ export async function comparePassword(password: string, hash: string): Promise<b
   return bcrypt.compare(password, hash);
 }
 
-export function generateToken(user: User, secret: string, expiresIn: string | number = '7d'): string {
+export function generateToken(user: User, secret: string, expiresIn = '7d'): string {
+  const options: jwt.SignOptions = { expiresIn };
   return jwt.sign(
     {
       id: user.id,
       email: user.email,
     },
     secret,
-    { expiresIn: expiresIn as string }
+    options
   );
 }
 
