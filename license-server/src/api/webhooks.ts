@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { handleWebhook } from '../stripe/payments.js';
 import { db, users, licenses } from '../db/index.js';
 
-const router = Router();
+const router: Router = Router();
 
 router.post('/stripe', async (req: Request, res: Response) => {
   try {

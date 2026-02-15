@@ -3,7 +3,7 @@ import { eq, and } from 'drizzle-orm';
 import { z } from 'zod';
 import { db, licenses, versions, machineActivations } from '../db/index.js';
 
-const router = Router();
+const router: Router = Router();
 
 // Validate license
 router.post('/validate', async (req: Request, res: Response) => {
@@ -69,7 +69,7 @@ router.post('/activate', async (req: Request, res: Response) => {
       version: z.string(),
     });
 
-    const { key, machineId, version } = schema.parse(req.body);
+    const { key, machineId } = schema.parse(req.body);
 
     const license = await db.query.licenses.findFirst({
       where: eq(licenses.key, key),

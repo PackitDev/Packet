@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { config } from 'dotenv';
@@ -9,7 +9,7 @@ import webhooksRouter from './api/webhooks.js';
 // Load environment variables
 config();
 
-const app = express();
+const app: Express = express();
 const PORT = process.env.PORT || 4000;
 
 // Middleware

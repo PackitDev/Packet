@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import { eq, desc } from 'drizzle-orm';
 import { db, versions } from '../db/index.js';
 
-const router = Router();
+const router: Router = Router();
 
 // Get current version
 router.get('/current', async (_req: Request, res: Response) => {
