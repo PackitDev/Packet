@@ -15,9 +15,9 @@ export function generateToken(user: User, secret: string, expiresIn: string = '7
     {
       id: user.id,
       email: user.email,
+      exp: Math.floor(Date.now() / 1000) + (expiresIn === '7d' ? 7 * 24 * 60 * 60 : 24 * 60 * 60),
     },
-    secret,
-    { expiresIn: expiresIn }
+    secret
   );
 }
 
