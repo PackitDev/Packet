@@ -1,8 +1,8 @@
-import type { Model, Schema } from './types.js';
+import type { Model } from './types.js';
 
 export function createModel<T extends Record<string, unknown>>(
   name: string,
-  schema: Schema
+  _schema: Record<string, unknown>
 ): Model<T> {
   // Simplified in-memory implementation for MVP
   const store = new Map<string, T>();
@@ -41,7 +41,7 @@ export function createModel<T extends Record<string, unknown>>(
         id,
         createdAt: new Date(),
         updatedAt: new Date(),
-      } as T;
+      } as unknown as T;
       store.set(id, item);
       return item;
     },
