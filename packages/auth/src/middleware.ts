@@ -2,9 +2,9 @@ import { verifyToken } from './jwt.js';
 import type { AuthConfig, AuthRequest } from './types.js';
 
 export function createAuthMiddleware(config: AuthConfig) {
-  return async (req: AuthRequest, res: unknown, next: () => void) => {
+  return async (req: AuthRequest, _res: unknown, next: () => void) => {
     if (config.provider === 'jwt') {
-      const authHeader = (req.headers as Record<string, string>)['authorization'];
+      const authHeader = req.headers?.['authorization'] as string | undefined;
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return next();
       }

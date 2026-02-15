@@ -36,12 +36,12 @@ export function createModel<T extends Record<string, unknown>>(
 
     async create(data: Partial<T>): Promise<T> {
       const id = Math.random().toString(36).substring(7);
-      const item = {
+      const item: T = {
         ...data,
         id,
         createdAt: new Date(),
         updatedAt: new Date(),
-      } as unknown as T;
+      } as T;
       store.set(id, item);
       return item;
     },
