@@ -1,4 +1,4 @@
-import { validateLicense, checkVersion } from '@effec-t/license';
+import { checkVersion } from '@effec-t/license';
 import { loadConfig, validateConfig } from './config.js';
 import { logger } from './logger.js';
 import { LifecycleManager } from './lifecycle.js';
