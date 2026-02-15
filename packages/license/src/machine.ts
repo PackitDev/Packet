@@ -1,4 +1,5 @@
-import { machineIdSync } from 'node-machine-id';
+import pkg from 'node-machine-id';
+const { machineIdSync } = pkg;
 
 export function getMachineId(): string {
   try {
