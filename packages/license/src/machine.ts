@@ -2,7 +2,7 @@ import { machineIdSync } from 'node-machine-id';
 
 export function getMachineId(): string {
   try {
-    return machineIdSync({ original: true });
+    return machineIdSync(true);
   } catch (error) {
     // Fallback to a random ID if machine ID cannot be retrieved
     console.warn('Could not retrieve machine ID, using fallback');

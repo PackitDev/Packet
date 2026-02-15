@@ -6,7 +6,6 @@ import type {
   LicenseValidationResponse,
   LicenseActivationRequest,
   LicenseActivationResponse,
-  LicenseInfo,
   VersionInfo,
 } from './types.js';
 
