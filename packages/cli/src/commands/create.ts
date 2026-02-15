@@ -1,6 +1,5 @@
 import { Command } from 'commander';
 import inquirer from 'inquirer';
-import { degit } from 'degit';
 import { join } from 'path';
 import { mkdir, writeFile } from 'fs/promises';
 import { execa } from 'execa';
