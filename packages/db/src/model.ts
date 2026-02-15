@@ -42,7 +42,7 @@ export function createModel<T extends Record<string, unknown>>(
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-      const typedItem = item as T;
+      const typedItem = item as unknown as T;
       store.set(id, typedItem);
       return typedItem;
     },
@@ -57,7 +57,7 @@ export function createModel<T extends Record<string, unknown>>(
         ...data,
         updatedAt: new Date(),
       };
-      const typedUpdated = updated as T;
+      const typedUpdated = updated as unknown as T;
       store.set(id, typedUpdated);
       return typedUpdated;
     },
