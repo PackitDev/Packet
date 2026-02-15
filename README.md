@@ -64,10 +64,30 @@ effec-t-sdk/
 │   ├── testing/       # Testing framework
 │   └── license/       # License validation
 ├── license-server/    # License & payment API
+├── website/           # Landing page (React + Vite + Tailwind)
 ├── templates/         # Project templates
 ├── docs/             # Documentation
 └── examples/         # Example projects
 ```
+
+## 🌐 Website
+
+A high-quality landing page is available in the `website/` folder:
+
+```bash
+cd website
+npm install
+npm run dev
+```
+
+**Features:**
+- Modern React + TypeScript + Vite stack
+- Tailwind CSS with custom gradients
+- Framer Motion animations
+- Fully responsive design
+- Pages: Home, Pricing, Docs
+
+See [website/README.md](website/README.md) for details.
 
 ## Development
 
@@ -87,6 +107,14 @@ pnpm lint
 # Format code
 pnpm format
 ```
+
+## 📚 Documentation
+
+- [Quick Start Guide](QUICK_START.md)
+- [CLI Ready Guide](CLI_READY.md)
+- [Testing Guide](TESTING_GUIDE.md)
+- [Final Status Report](FINAL_STATUS.md)
+- [Contributing Guide](CONTRIBUTING.md)
 
 ## License
 
