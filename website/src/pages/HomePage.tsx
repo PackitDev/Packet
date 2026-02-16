@@ -134,28 +134,34 @@ export default function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="text-2xl sm:text-3xl text-white/60 font-mono"
+              className="text-2xl sm:text-3xl font-mono glass inline-block px-6 py-3 rounded-2xl"
             >
-              Build{' '}
+              <span className="text-white/60">$</span>{' '}
+              <span className="text-yellow-400 font-bold">packet</span>{' '}
+              <span className="text-pink-400">create</span>{' '}
               <TypeWriter
-                words={['APIs', 'Apps', 'Dashboards', 'SaaS', 'Startups', 'MVPs', 'Products']}
-                className="text-yellow-400 font-bold"
+                words={['my-saas', 'my-startup', 'my-api', 'my-app', 'my-mvp', 'my-project']}
+                className="text-green-400 font-bold"
               />
-              {' '}in minutes
             </motion.div>
             
             {/* Subheadline */}
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="max-w-3xl mx-auto text-2xl sm:text-3xl text-white/80 font-medium leading-relaxed uppercase tracking-wide"
+              className="max-w-4xl mx-auto space-y-6"
             >
-              PACKET ISN'T JUST ABOUT BUILDING APPS{' '}
-              <span className="text-white/60">(ALTHOUGH, LET'S BE HONEST, THAT'S AMAZING)</span>. 
-              IT'S ABOUT TURNING DEVELOPMENT INTO A{' '}
-              <span className="gradient-text font-black">SUPERPOWER</span>.
-            </motion.p>
+              <p className="text-xl sm:text-2xl text-white/60 font-medium leading-relaxed">
+                Stop wasting time on boilerplate. Stop configuring. Stop debugging setup issues.
+              </p>
+              <p className="text-2xl sm:text-3xl text-white font-bold leading-relaxed">
+                Start <span className="gradient-text">shipping</span>. Start <span className="gradient-text">building</span>. Start <span className="gradient-text">winning</span>.
+              </p>
+              <p className="text-lg text-white/50 font-medium">
+                From zero to production in under 60 seconds. No joke.
+              </p>
+            </motion.div>
             
             {/* CTA Buttons */}
             <motion.div
@@ -169,7 +175,7 @@ export default function HomePage() {
                 className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-12 py-6 rounded-full font-black text-xl uppercase tracking-wide hover:scale-105 transition-all shadow-2xl shadow-orange-500/50 hover:shadow-orange-500/70 overflow-hidden"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  Get Started
+                  Start Building Free
                   <motion.span
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
@@ -188,9 +194,33 @@ export default function HomePage() {
                 to="/docs"
                 className="group bg-white/10 backdrop-blur-sm text-white px-12 py-6 rounded-full font-bold text-xl uppercase tracking-wide hover:bg-white/20 transition-all border-2 border-white/20 hover:border-white/40 hover:scale-105 relative overflow-hidden"
               >
-                <span className="relative z-10">Read Manifesto</span>
+                <span className="relative z-10 flex items-center gap-2">
+                  <span>Watch Demo</span>
+                  <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
+            </motion.div>
+            
+            {/* Quick Info */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="flex flex-wrap justify-center gap-6 text-sm text-white/50 pt-4"
+            >
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full" />
+                No credit card required
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full" />
+                Free tier available
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full" />
+                Setup in 60 seconds
+              </span>
             </motion.div>
 
             {/* Stats Bar */}
