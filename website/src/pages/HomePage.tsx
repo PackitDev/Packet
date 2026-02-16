@@ -562,7 +562,7 @@ export default function HomePage() {
               {
                 quote: "We migrated our entire stack to Packet. 10x productivity is not an exaggeration.",
                 author: "Mike Johnson",
-                role: "CTO @ StartupXYZ",
+                role: "Chief Developer",
                 avatar: "M"
               }
             ].map((testimonial, i) => (

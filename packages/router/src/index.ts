@@ -1,10 +1,10 @@
 export * from './types.js';
 export * from './scanner.js';
 
-import type { RouterConfig } from './types.js';
+import type { RouterConfig, Router } from './types.js';
 import { scanRoutes } from './scanner.js';
 
-export async function createRouter(config: RouterConfig) {
+export async function createRouter(config: RouterConfig): Promise<Router> {
   const routes = await scanRoutes(config.dir);
 
   return {
@@ -12,3 +12,5 @@ export async function createRouter(config: RouterConfig) {
     getRoutes: () => routes,
   };
 }
+
+export { scanRoutes };

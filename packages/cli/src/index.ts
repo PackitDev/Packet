@@ -7,6 +7,8 @@ import { buildCommand } from './commands/build.js';
 import { licenseCommand } from './commands/license.js';
 import { versionCommand } from './commands/version.js';
 import { upgradeCommand } from './commands/upgrade.js';
+import { featureCommand } from './commands/feature.js';
+import { envCommand } from './commands/env.js';
 
 const program = new Command();
 
@@ -22,6 +24,8 @@ program.addCommand(buildCommand());
 program.addCommand(licenseCommand());
 program.addCommand(versionCommand());
 program.addCommand(upgradeCommand());
+program.addCommand(featureCommand());
+program.addCommand(envCommand());
 
 // Parse arguments
 program.parse();

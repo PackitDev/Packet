@@ -12,14 +12,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@effec-t/core": "workspace:*",
-    "drizzle-orm": "^0.29.3",
-    "postgres": "^3.4.3",
-    "mysql2": "^3.9.1",
+    "pg": "^8.11.3",
+    "mysql2": "^3.6.5",
+    "better-sqlite3": "^9.2.2",
     "mongodb": "^6.3.0"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.20.14",
+    "@types/pg": "^8.10.9",
+    "@types/better-sqlite3": "^7.6.8",
     "typescript": "^5.3.3"
   }
 }

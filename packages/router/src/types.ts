@@ -1,14 +1,19 @@
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
 export interface Route {
   path: string;
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  handler: (req: Request, context: RouteContext) => Promise<unknown>;
+  filePath: string;
+  handlers: Partial<Record<HttpMethod, RouteHandler>>;
+  middleware?: RouteHandler[];
 }
 
-export interface RouteContext {
-  params: Record<string, string>;
-  query: Record<string, string>;
-}
+export type RouteHandler = (req: any, res: any) => Promise<any> | any;
 
 export interface RouterConfig {
   dir: string;
+}
+
+export interface Router {
+  routes: Route[];
+  getRoutes(): Route[];
 }

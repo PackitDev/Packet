@@ -43,6 +43,7 @@ export interface EffecTApp {
   start(): Promise<void>;
   stop(): Promise<void>;
   getServer(): unknown;
+  getHttpServer(): unknown;
 }
 
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';

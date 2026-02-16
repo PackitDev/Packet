@@ -1,0 +1,22 @@
+{
+  "name": "{{PROJECT_NAME}}",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "packet dev",
+    "build": "packet build",
+    "start": "node dist/index.js",
+    "deploy": "packet deploy"
+  },
+  "dependencies": {
+    "@effec-t/core": "^1.0.0-beta.1",
+    "@effec-t/auth": "^1.0.0-beta.1",
+    "@effec-t/db": "^1.0.0-beta.1",
+    "@effec-t/router": "^1.0.0-beta.1"
+  },
+  "devDependencies": {
+    "@effec-t/testing": "^1.0.0-beta.1",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0"
+  }
+}

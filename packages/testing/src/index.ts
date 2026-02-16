@@ -1,7 +1,17 @@
 export * from './types.js';
-export * from './app.js';
+export * from './api.js';
+export * from './db.js';
+export * from './auth.js';
+export * from './fixtures.js';
 
-import { test as vitestTest, expect as vitestExpect } from 'vitest';
+import { createAPITester } from './api.js';
+import { createDatabaseTester } from './db.js';
+import { createAuthTester } from './auth.js';
+import { fixtures } from './fixtures.js';
 
-export const test = vitestTest;
-export const expect = vitestExpect;
+export const testing = {
+  api: createAPITester,
+  db: createDatabaseTester,
+  auth: createAuthTester,
+  fixtures,
+};

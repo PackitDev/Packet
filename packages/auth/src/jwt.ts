@@ -10,21 +10,81 @@ export async function comparePassword(password: string, hash: string): Promise<b
   return bcrypt.compare(password, hash);
 }
 
+export interface JWTConfig {
+  secret: string;
+  expiresIn?: string;
+  issuer?: string;
+  audience?: string;
+}
+
+export interface JWTPayload {
+  userId: string | number;
+  email?: string;
+  role?: string;
+  [key: string]: any;
+}
+
+export interface TokenPair {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export function generateToken(user: User, secret: string, expiresIn: string = '7d'): string {
   return jwt.sign(
     {
       id: user.id,
       email: user.email,
-      exp: Math.floor(Date.now() / 1000) + (expiresIn === '7d' ? 7 * 24 * 60 * 60 : 24 * 60 * 60),
+      role: user.role,
     },
-    secret
+    secret,
+    { expiresIn }
   );
 }
 
-export function verifyToken(token: string, secret: string): { id: string; email: string } | null {
+export function verifyToken(token: string, secret: string): JWTPayload | null {
   try {
-    return jwt.verify(token, secret) as { id: string; email: string };
-  } catch (error) {
+    return jwt.verify(token, secret) as JWTPayload;
+  } catch {
+    return null;
+  }
+}
+
+export function createToken(payload: JWTPayload, config: JWTConfig): string {
+  return jwt.sign(payload, config.secret, {
+    expiresIn: config.expiresIn || '7d',
+    issuer: config.issuer,
+    audience: config.audience,
+  });
+}
+
+export function createTokenPair(payload: JWTPayload, config: JWTConfig): TokenPair {
+  const accessToken = jwt.sign(payload, config.secret, {
+    expiresIn: config.expiresIn || '15m',
+  });
+
+  const refreshToken = jwt.sign(
+    { userId: payload.userId, type: 'refresh' },
+    config.secret,
+    { expiresIn: '7d' }
+  );
+
+  return { accessToken, refreshToken };
+}
+
+export function refreshAccessToken(refreshToken: string, config: JWTConfig): string {
+  const payload = verifyToken(refreshToken, config.secret);
+  
+  if (!payload || payload.type !== 'refresh') {
+    throw new Error('Invalid refresh token');
+  }
+
+  return createToken({ userId: payload.userId }, config);
+}
+
+export function decodeToken(token: string): JWTPayload | null {
+  try {
+    return jwt.decode(token) as JWTPayload;
+  } catch {
     return null;
   }
 }
