@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom'
-import { Zap, Code, Database, Lock, Rocket, GitBranch, TestTube, Package } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { Zap, Code, Database, Lock, Rocket, GitBranch, TestTube, Package, Minimize2, Maximize2, X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
 
 export default function HomePage() {
+  const [terminalVisible, setTerminalVisible] = useState(true)
+  const [terminalMinimized, setTerminalMinimized] = useState(false)
+  const [terminalMaximized, setTerminalMaximized] = useState(false)
+
   const features = [
     {
       icon: <Code className="w-6 h-6" />,
@@ -69,44 +74,188 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8">
               <Link
                 to="/pricing"
-                className="bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-12 py-6 rounded-full font-black text-xl uppercase tracking-wide hover:scale-105 transition-transform shadow-2xl shadow-orange-500/50"
+                className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-12 py-6 rounded-full font-black text-xl uppercase tracking-wide hover:scale-105 transition-all shadow-2xl shadow-orange-500/50 hover:shadow-orange-500/70 overflow-hidden"
               >
-                Get Started →
+                <span className="relative z-10">Get Started →</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
               <Link
                 to="/docs"
-                className="bg-white/10 backdrop-blur-sm text-white px-12 py-6 rounded-full font-bold text-xl uppercase tracking-wide hover:bg-white/20 transition-colors border-2 border-white/20"
+                className="group bg-white/10 backdrop-blur-sm text-white px-12 py-6 rounded-full font-bold text-xl uppercase tracking-wide hover:bg-white/20 transition-all border-2 border-white/20 hover:border-white/40 hover:scale-105 relative overflow-hidden"
               >
-                Read Manifesto
+                <span className="relative z-10">Read Manifesto</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
             </div>
 
-            {/* Code Example */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-20 max-w-4xl mx-auto"
-            >
-              <div className="bg-white/5 backdrop-blur-xl rounded-3xl border-2 border-white/10 overflow-hidden shadow-2xl">
-                <div className="bg-white/5 px-6 py-4 flex items-center space-x-3 border-b border-white/10">
-                  <div className="w-4 h-4 rounded-full bg-red-500" />
-                  <div className="w-4 h-4 rounded-full bg-yellow-500" />
-                  <div className="w-4 h-4 rounded-full bg-green-500" />
-                  <span className="text-white/60 text-sm ml-4 font-semibold uppercase tracking-wider">Terminal</span>
-                </div>
-                <div className="p-8 font-mono text-base">
-                  <div className="text-white/80">$ <span className="text-yellow-400 font-bold">packet create</span> <span className="text-pink-400">my-app</span></div>
-                  <div className="text-green-400 mt-3 font-semibold">✓ Template: Full-stack TypeScript</div>
-                  <div className="text-green-400 font-semibold">✓ Database: PostgreSQL</div>
-                  <div className="text-green-400 font-semibold">✓ Auth: JWT</div>
-                  <div className="text-yellow-400 mt-4 font-bold text-lg">✓ PROJECT CREATED IN 8 SECONDS!</div>
-                  <div className="text-white/80 mt-6">$ <span className="text-yellow-400 font-bold">npm run dev</span></div>
-                  <div className="text-orange-400 mt-3 font-bold">→ RUNNING ON http://localhost:3000</div>
-                  <div className="text-white/60 mt-2">→ Ready to ship 🚀</div>
-                </div>
-              </div>
-            </motion.div>
+            {/* Interactive Terminal */}
+            <AnimatePresence>
+              {terminalVisible && (
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ 
+                    opacity: 1, 
+                    y: 0,
+                    scale: terminalMaximized ? 1.1 : 1,
+                  }}
+                  exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                  transition={{ duration: 0.3 }}
+                  className={`mt-20 mx-auto ${terminalMaximized ? 'max-w-6xl' : 'max-w-4xl'}`}
+                >
+                  <div className="bg-white/5 backdrop-blur-xl rounded-3xl border-2 border-white/10 overflow-hidden shadow-2xl hover:shadow-yellow-500/20 transition-shadow">
+                    {/* Terminal Header */}
+                    <div className="bg-gradient-to-r from-white/10 to-white/5 px-6 py-4 flex items-center justify-between border-b border-white/10">
+                      <div className="flex items-center space-x-3">
+                        <button
+                          onClick={() => setTerminalVisible(false)}
+                          className="w-4 h-4 rounded-full bg-red-500 hover:bg-red-600 transition-colors cursor-pointer hover:scale-110 active:scale-95"
+                          title="Close"
+                        />
+                        <button
+                          onClick={() => {
+                            setTerminalMinimized(!terminalMinimized)
+                            setTerminalMaximized(false)
+                          }}
+                          className="w-4 h-4 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer hover:scale-110 active:scale-95"
+                          title="Minimize"
+                        />
+                        <button
+                          onClick={() => {
+                            setTerminalMaximized(!terminalMaximized)
+                            setTerminalMinimized(false)
+                          }}
+                          className="w-4 h-4 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer hover:scale-110 active:scale-95 flex items-center justify-center"
+                          title="Maximize"
+                        />
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <span className="text-white/60 text-sm font-semibold uppercase tracking-wider">Terminal</span>
+                        <div className="flex space-x-1">
+                          {terminalMinimized && <Minimize2 className="w-4 h-4 text-white/40" />}
+                          {terminalMaximized && <Maximize2 className="w-4 h-4 text-white/40" />}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Terminal Content */}
+                    <AnimatePresence>
+                      {!terminalMinimized && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className={`p-8 font-mono ${terminalMaximized ? 'text-lg' : 'text-base'}`}>
+                            <motion.div
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.1 }}
+                              className="text-white/80"
+                            >
+                              $ <span className="text-yellow-400 font-bold">packet create</span> <span className="text-pink-400">my-app</span>
+                            </motion.div>
+                            
+                            <motion.div
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.3 }}
+                              className="text-green-400 mt-3 font-semibold"
+                            >
+                              ✓ Template: Full-stack TypeScript
+                            </motion.div>
+                            
+                            <motion.div
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.4 }}
+                              className="text-green-400 font-semibold"
+                            >
+                              ✓ Database: PostgreSQL
+                            </motion.div>
+                            
+                            <motion.div
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.5 }}
+                              className="text-green-400 font-semibold"
+                            >
+                              ✓ Auth: JWT
+                            </motion.div>
+                            
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ delay: 0.7 }}
+                              className="text-yellow-400 mt-4 font-bold text-lg"
+                            >
+                              ✓ PROJECT CREATED IN 8 SECONDS!
+                            </motion.div>
+                            
+                            <motion.div
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.9 }}
+                              className="text-white/80 mt-6"
+                            >
+                              $ <span className="text-yellow-400 font-bold">npm run dev</span>
+                            </motion.div>
+                            
+                            <motion.div
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 1.1 }}
+                              className="text-orange-400 mt-3 font-bold"
+                            >
+                              → RUNNING ON http://localhost:3000
+                            </motion.div>
+                            
+                            <motion.div
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 1.3 }}
+                              className="text-white/60 mt-2"
+                            >
+                              → Ready to ship 🚀
+                            </motion.div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Minimized State */}
+                    {terminalMinimized && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="px-6 py-3 text-center"
+                      >
+                        <span className="text-white/40 text-sm font-semibold uppercase tracking-wider">
+                          Terminal Minimized
+                        </span>
+                      </motion.div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Restore Terminal Button */}
+            {!terminalVisible && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-20 text-center"
+              >
+                <button
+                  onClick={() => setTerminalVisible(true)}
+                  className="bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-8 py-4 rounded-full font-black uppercase tracking-wide hover:scale-105 transition-transform shadow-lg"
+                >
+                  Show Terminal Demo →
+                </button>
+              </motion.div>
+            )}
           </motion.div>
         </div>
       </section>
@@ -133,13 +282,17 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-2xl p-8 hover:border-yellow-500/50 hover:bg-white/10 transition-all group"
+                whileHover={{ y: -8 }}
+                className="bg-white/5 backdrop-blur-sm border-2 border-white/10 rounded-2xl p-8 hover:border-yellow-500/50 hover:bg-white/10 transition-all group cursor-pointer relative overflow-hidden"
               >
-                <div className="bg-gradient-to-br from-yellow-400 via-orange-500 to-pink-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  {feature.icon}
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/0 via-orange-500/0 to-pink-500/0 group-hover:from-yellow-500/5 group-hover:via-orange-500/5 group-hover:to-pink-500/5 transition-all duration-500" />
+                <div className="relative z-10">
+                  <div className="bg-gradient-to-br from-yellow-400 via-orange-500 to-pink-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all shadow-lg">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-2xl font-black mb-3 uppercase tracking-tight group-hover:text-yellow-400 transition-colors">{feature.title}</h3>
+                  <p className="text-white/70 text-lg leading-relaxed group-hover:text-white/90 transition-colors">{feature.description}</p>
                 </div>
-                <h3 className="text-2xl font-black mb-3 uppercase tracking-tight">{feature.title}</h3>
-                <p className="text-white/70 text-lg leading-relaxed">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -235,9 +388,23 @@ export default function HomePage() {
           </p>
           <Link
             to="/pricing"
-            className="inline-block bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-16 py-8 rounded-full font-black text-2xl uppercase tracking-wide hover:scale-110 transition-transform shadow-2xl shadow-orange-500/50"
+            className="group relative inline-block bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-16 py-8 rounded-full font-black text-2xl uppercase tracking-wide hover:scale-110 transition-all shadow-2xl shadow-orange-500/50 hover:shadow-orange-500/80 overflow-hidden"
           >
-            GET STARTED NOW →
+            <span className="relative z-10 flex items-center gap-3">
+              GET STARTED NOW 
+              <motion.span
+                animate={{ x: [0, 5, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+              >
+                →
+              </motion.span>
+            </span>
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-400"
+              initial={{ x: '-100%' }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
           </Link>
           <p className="text-white/60 mt-8 text-lg font-semibold uppercase tracking-wider">
             $49 ONE-TIME • NO SUBSCRIPTION • FOREVER
