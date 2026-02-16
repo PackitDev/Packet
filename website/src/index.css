@@ -14,15 +14,25 @@
     @apply font-bold;
     font-family: 'Inter', system-ui, sans-serif;
   }
+  
+  ::selection {
+    @apply bg-yellow-500 text-black;
+  }
 }
 
 @layer utilities {
   .gradient-text {
     @apply bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 bg-clip-text text-transparent;
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
   }
   
   .gradient-text-alt {
     @apply bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent;
+  }
+  
+  .gradient-text-static {
+    @apply bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 bg-clip-text text-transparent;
   }
   
   .text-huge {
@@ -32,4 +42,48 @@
   .text-mega {
     @apply text-5xl sm:text-6xl lg:text-7xl xl:text-8xl;
   }
+  
+  .glow {
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.5), 0 0 40px rgba(251, 191, 36, 0.3), 0 0 60px rgba(251, 191, 36, 0.1);
+  }
+  
+  .glow-box {
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.3), 0 0 60px rgba(251, 191, 36, 0.1);
+  }
+  
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+  }
+  
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  
+  .glass-strong {
+    @apply bg-white/10 backdrop-blur-2xl border-2 border-white/20;
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }
