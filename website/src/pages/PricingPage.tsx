@@ -1,314 +1,475 @@
-import { Check, Zap, Star, Crown, Sparkles } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { Check, Zap, Star, Crown, Sparkles, ArrowRight, Shield, Clock, Users, Gift, ChevronDown, X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function PricingPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [billingCycle, setBillingCycle] = useState<'early' | 'launch'>('early')
+
   const plans = [
     {
       name: 'Early Access',
       price: '$49',
+      originalPrice: '$99',
       period: 'one-time',
-      badge: 'Limited Time',
-      badgeColor: 'bg-purple-500',
+      badge: 'SAVE 50%',
+      badgeColor: 'from-yellow-400 to-orange-500',
       icon: <Sparkles className="w-6 h-6" />,
-      description: 'Get in early and save big on future versions',
+      description: 'Lock in the best price forever',
       features: [
-        'Full beta access',
-        'Lifetime v1.0 access',
-        '50% discount on v2.0 ($49 instead of $99)',
-        'Priority support',
-        'Early feature access',
-        'Influence roadmap',
-        'All v1.0 features included',
-        'Community Discord access',
+        { text: 'Full beta access', highlight: true },
+        { text: 'Lifetime v1.0 access', highlight: true },
+        { text: '50% off ALL future versions', highlight: true },
+        { text: 'Priority support', highlight: false },
+        { text: 'Early feature access', highlight: false },
+        { text: 'Influence roadmap', highlight: false },
+        { text: 'Discord community', highlight: false },
+        { text: 'All v1.0 features', highlight: false },
       ],
       cta: 'Get Early Access',
       popular: true,
+      gradient: 'from-yellow-400 via-orange-500 to-pink-500',
     },
     {
-      name: 'v1.0',
-      price: 'FREE',
+      name: 'Free',
+      price: '$0',
       period: 'forever',
-      badge: 'After Launch',
-      badgeColor: 'bg-green-500',
+      badge: 'AFTER LAUNCH',
+      badgeColor: 'from-green-400 to-emerald-500',
       icon: <Zap className="w-6 h-6" />,
-      description: 'Full-featured, completely free after early access',
+      description: 'Full-featured, no strings attached',
       features: [
-        'All core features',
-        'CLI tools',
-        'Auto-routing',
-        'Authentication (JWT, OAuth)',
-        'Database ORM',
-        'Git workflows',
-        'Deployment tools',
-        'Testing framework',
-        'Community support',
+        { text: 'All core features', highlight: false },
+        { text: 'CLI tools', highlight: false },
+        { text: 'Auto-routing', highlight: false },
+        { text: 'Authentication', highlight: false },
+        { text: 'Database ORM', highlight: false },
+        { text: 'Git workflows', highlight: false },
+        { text: 'Deployment tools', highlight: false },
+        { text: 'Community support', highlight: false },
       ],
       cta: 'Coming Soon',
       popular: false,
+      gradient: 'from-green-400 to-emerald-500',
     },
     {
-      name: 'v2.0',
+      name: 'Pro',
       price: '$99',
       period: 'one-time',
-      badge: 'Future',
-      badgeColor: 'bg-blue-500',
+      badge: 'v2.0',
+      badgeColor: 'from-blue-400 to-indigo-500',
       icon: <Star className="w-6 h-6" />,
-      description: 'Next generation features and capabilities',
+      description: 'Advanced features for power users',
       features: [
-        'Everything in v1.0',
-        'GraphQL support',
-        'Real-time subscriptions',
-        'Advanced monitoring',
-        'Database GUI',
-        'Team collaboration tools',
-        'Advanced deployment options',
-        'Priority support',
-        '$49 for early access users',
+        { text: 'Everything in Free', highlight: false },
+        { text: 'GraphQL support', highlight: true },
+        { text: 'Real-time subscriptions', highlight: true },
+        { text: 'Advanced monitoring', highlight: true },
+        { text: 'Database GUI', highlight: false },
+        { text: 'Team collaboration', highlight: false },
+        { text: 'Priority support', highlight: false },
+        { text: '$49 for early users', highlight: true },
       ],
-      cta: 'Roadmap',
+      cta: 'View Roadmap',
       popular: false,
+      gradient: 'from-blue-400 to-indigo-500',
     },
     {
       name: 'Enterprise',
       price: 'Custom',
       period: 'contact us',
-      badge: 'Custom',
-      badgeColor: 'bg-orange-500',
+      badge: 'TEAMS',
+      badgeColor: 'from-purple-400 to-pink-500',
       icon: <Crown className="w-6 h-6" />,
-      description: 'Tailored solutions for large teams',
+      description: 'For teams that need more',
       features: [
-        'All features from latest version',
-        'Custom integrations',
-        'Dedicated support',
-        'SLA guarantees',
-        'Training & onboarding',
-        'Custom deployment',
-        'Security audits',
-        'Volume licensing',
+        { text: 'Everything in Pro', highlight: false },
+        { text: 'Custom integrations', highlight: true },
+        { text: 'Dedicated support', highlight: true },
+        { text: 'SLA guarantees', highlight: true },
+        { text: 'Training & onboarding', highlight: false },
+        { text: 'Custom deployment', highlight: false },
+        { text: 'Security audits', highlight: false },
+        { text: 'Volume licensing', highlight: false },
       ],
       cta: 'Contact Sales',
       popular: false,
+      gradient: 'from-purple-400 to-pink-500',
     },
   ]
 
-  const versionLifecycle = [
+  const faqs = [
     {
-      version: 'v1.0',
-      status: 'FREE',
-      description: 'Fully featured, completely free',
-      color: 'text-green-400',
+      q: 'What happens after I buy early access?',
+      a: 'You get immediate access to the beta, lifetime v1.0 access when it launches, and 50% off v2.0 ($49 instead of $99). You also get priority support and can influence the roadmap.',
     },
     {
-      version: 'v2.0',
-      status: 'PAID ($99)',
-      description: 'Latest features and updates',
-      color: 'text-blue-400',
+      q: 'Is v1.0 really free?',
+      a: 'Yes! After the early access period ends, v1.0 will be completely free with all features included. No limitations, no trial period, no credit card required.',
     },
     {
-      version: 'v3.0',
-      status: 'PAID ($149)',
-      description: 'When released, v2.0 gets security updates',
-      color: 'text-purple-400',
+      q: 'Do I need to upgrade to v2.0?',
+      a: 'No. v1.0 will continue to receive security updates and work perfectly. Upgrade only if you want the new v2.0 features like GraphQL, real-time, and advanced monitoring.',
     },
     {
-      version: 'v4.0',
-      status: 'PAID ($199)',
-      description: 'When released, v2.0 becomes FREE, v1.0 becomes LEGACY ($29)',
-      color: 'text-orange-400',
+      q: 'Can I use this commercially?',
+      a: 'Absolutely! All licenses (including the free v1.0) can be used for commercial projects with no restrictions. Build and sell whatever you want.',
+    },
+    {
+      q: 'What about team licenses?',
+      a: 'Each developer needs their own license. For teams of 10+, contact us for volume pricing and enterprise features with dedicated support.',
+    },
+    {
+      q: 'Is there a refund policy?',
+      a: 'Yes! We offer a 30-day money-back guarantee. If you\'re not satisfied, we\'ll refund you in full, no questions asked.',
     },
   ]
 
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="py-32 min-h-[60vh] flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-24 sm:py-32 relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-orange-500/5 to-pink-500/5 pointer-events-none" />
+        <div className="absolute inset-0 noise pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="space-y-8"
           >
-            <h1 className="text-huge font-black mb-8 tracking-tighter leading-none">
+            {/* Badge */}
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              className="inline-flex items-center gap-2 bg-yellow-500/10 border-2 border-yellow-500/30 rounded-full px-6 py-3"
+            >
+              <Gift className="w-5 h-5 text-yellow-400" />
+              <span className="text-yellow-400 font-bold uppercase tracking-wide">Limited Time: 50% Off Early Access</span>
+            </motion.div>
+
+            <h1 className="text-huge font-black tracking-tighter leading-none">
               SIMPLE.
               <br />
-              <span className="gradient-text">TRANSPARENT.</span>
+              <span className="gradient-text glow">HONEST.</span>
               <br />
               PRICING.
             </h1>
-            <p className="text-2xl sm:text-3xl text-white/70 max-w-3xl mx-auto font-bold uppercase tracking-wide leading-relaxed">
-              PAY ONCE. OWN FOREVER.<br />NO SUBSCRIPTIONS. NO HIDDEN FEES.
+            
+            <p className="text-xl sm:text-2xl text-white/60 max-w-2xl mx-auto leading-relaxed">
+              Pay once, own forever. No subscriptions. No hidden fees.
+              <br />
+              <span className="text-white font-semibold">Just software that works.</span>
             </p>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-10 pt-4">
+              <div className="flex items-center gap-2 text-white/60">
+                <Shield className="w-5 h-5 text-green-400" />
+                <span className="text-sm font-semibold">30-Day Guarantee</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/60">
+                <Clock className="w-5 h-5 text-blue-400" />
+                <span className="text-sm font-semibold">Instant Access</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/60">
+                <Users className="w-5 h-5 text-purple-400" />
+                <span className="text-sm font-semibold">500+ Developers</span>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* Pricing Cards */}
-      <section className="pb-24">
+      <section className="pb-32 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {plans.map((plan, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`relative bg-slate-800/50 border rounded-lg p-8 ${
-                  plan.popular
-                    ? 'border-purple-500 shadow-lg shadow-purple-500/20 scale-105'
-                    : 'border-slate-700'
+                whileHover={{ y: -8 }}
+                className={`relative rounded-3xl overflow-hidden ${
+                  plan.popular ? 'lg:scale-110 z-10' : ''
                 }`}
               >
+                {/* Popular Badge */}
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                      Best Value
-                    </span>
-                  </div>
+                  <div className="absolute -top-px -left-px -right-px h-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500" />
                 )}
+                
+                {/* Card Content */}
+                <div className={`h-full p-8 ${plan.popular ? 'glass-strong' : 'glass'}`}>
+                  {/* Badge */}
+                  <div className={`inline-flex items-center gap-2 bg-gradient-to-r ${plan.badgeColor} rounded-full px-4 py-1.5 text-xs font-black text-black mb-6`}>
+                    {plan.icon}
+                    <span>{plan.badge}</span>
+                  </div>
 
-                <div className={`inline-flex items-center space-x-2 ${plan.badgeColor} rounded-full px-3 py-1 text-xs font-semibold mb-4`}>
-                  {plan.icon}
-                  <span>{plan.badge}</span>
+                  {/* Plan Name */}
+                  <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">{plan.name}</h3>
+                  
+                  {/* Price */}
+                  <div className="mb-4">
+                    <div className="flex items-baseline gap-2">
+                      <span className={`text-5xl font-black ${plan.popular ? 'gradient-text' : ''}`}>{plan.price}</span>
+                      {plan.originalPrice && (
+                        <span className="text-xl text-white/40 line-through">{plan.originalPrice}</span>
+                      )}
+                    </div>
+                    <span className="text-white/50 text-sm font-semibold uppercase">{plan.period}</span>
+                  </div>
+                  
+                  {/* Description */}
+                  <p className="text-white/60 mb-6 text-sm">{plan.description}</p>
+
+                  {/* Features */}
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <Check className={`w-5 h-5 flex-shrink-0 mt-0.5 ${feature.highlight ? 'text-yellow-400' : 'text-green-400'}`} />
+                        <span className={`text-sm ${feature.highlight ? 'text-white font-semibold' : 'text-white/70'}`}>
+                          {feature.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA Button */}
+                  <button
+                    className={`w-full py-4 rounded-2xl font-black uppercase tracking-wide transition-all ${
+                      plan.popular
+                        ? 'bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black hover:shadow-lg hover:shadow-orange-500/50 hover:scale-105'
+                        : 'bg-white/10 text-white hover:bg-white/20 border-2 border-white/10 hover:border-white/30'
+                    }`}
+                  >
+                    {plan.cta}
+                  </button>
                 </div>
-
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <div className="mb-4">
-                  <span className="text-4xl font-bold">{plan.price}</span>
-                  <span className="text-slate-400 ml-2">{plan.period}</span>
-                </div>
-                <p className="text-slate-400 mb-6">{plan.description}</p>
-
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-300 text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  className={`w-full py-3 rounded-lg font-semibold transition-all ${
-                    plan.popular
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:shadow-lg hover:shadow-purple-500/50'
-                      : 'bg-slate-700 text-white hover:bg-slate-600'
-                  }`}
-                >
-                  {plan.cta}
-                </button>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Version Lifecycle */}
-      <section className="py-24 bg-slate-900/50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Version Lifecycle</h2>
-            <p className="text-xl text-slate-400">
-              Understand how our perpetual licensing model works
+      {/* Comparison Table */}
+      <section className="py-32 bg-gradient-to-b from-black to-yellow-500/5 relative overflow-hidden">
+        <div className="absolute inset-0 noise pointer-events-none" />
+        
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-mega font-black mb-6 tracking-tighter">
+              VERSION
+              <br />
+              <span className="gradient-text">LIFECYCLE.</span>
+            </h2>
+            <p className="text-xl text-white/60">
+              Our unique pricing model rewards early adopters
             </p>
+          </motion.div>
+
+          {/* Timeline */}
+          <div className="relative">
+            {/* Vertical Line */}
+            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-yellow-400 via-orange-500 to-pink-500 hidden md:block" />
+            
+            <div className="space-y-8">
+              {[
+                { version: 'v1.0', status: 'FREE', desc: 'Full-featured, completely free forever', color: 'green', icon: <Zap className="w-6 h-6" /> },
+                { version: 'v2.0', status: '$99', desc: 'Advanced features, GraphQL, real-time', color: 'blue', icon: <Star className="w-6 h-6" /> },
+                { version: 'v3.0', status: '$149', desc: 'When released, v2.0 gets security updates only', color: 'purple', icon: <Sparkles className="w-6 h-6" /> },
+                { version: 'v4.0', status: '$199', desc: 'When released, v2.0 becomes FREE', color: 'orange', icon: <Crown className="w-6 h-6" /> },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex gap-6 items-start"
+                >
+                  {/* Icon */}
+                  <div className={`w-16 h-16 rounded-2xl bg-${item.color}-500/20 border-2 border-${item.color}-500/50 flex items-center justify-center flex-shrink-0 text-${item.color}-400`}>
+                    {item.icon}
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="glass rounded-2xl p-6 flex-grow">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-2xl font-black">{item.version}</h3>
+                      <span className={`text-2xl font-black text-${item.color}-400`}>{item.status}</span>
+                    </div>
+                    <p className="text-white/60">{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
-          <div className="space-y-6">
-            {versionLifecycle.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-slate-800/50 border border-slate-700 rounded-lg p-6"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">{item.version}</h3>
-                    <p className="text-slate-400">{item.description}</p>
-                  </div>
-                  <div className={`text-2xl font-bold ${item.color}`}>
-                    {item.status}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-12 bg-blue-500/10 border border-blue-500/20 rounded-lg p-6">
-            <h3 className="text-xl font-bold mb-2 text-blue-400">How It Works</h3>
-            <ul className="space-y-2 text-slate-300">
-              <li>• <strong>Current Version:</strong> Always paid (except v1.0 which is free)</li>
-              <li>• <strong>Previous Version:</strong> Receives security and maintenance updates</li>
-              <li>• <strong>Two Versions Back:</strong> Becomes completely FREE</li>
-              <li>• <strong>Three Versions Back:</strong> Moves to LEGACY status ($29 one-time)</li>
-              <li>• <strong>Early Access Users:</strong> Get 50% off ALL future versions forever</li>
-            </ul>
-          </div>
+          {/* Info Box */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-12 glass-strong rounded-3xl p-8 border-yellow-500/30"
+          >
+            <h3 className="text-2xl font-black mb-4 gradient-text">EARLY ACCESS = 50% OFF FOREVER</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-white/80">
+              <div className="flex items-center gap-3">
+                <Check className="w-5 h-5 text-yellow-400" />
+                <span>v2.0 for $49 (instead of $99)</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Check className="w-5 h-5 text-yellow-400" />
+                <span>v3.0 for $75 (instead of $149)</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Check className="w-5 h-5 text-yellow-400" />
+                <span>v4.0 for $100 (instead of $199)</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Check className="w-5 h-5 text-yellow-400" />
+                <span>All future versions at 50% off</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      <section className="py-32 relative">
+        <div className="absolute inset-0 noise pointer-events-none" />
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-mega font-black mb-6 tracking-tighter">
+              GOT
+              <br />
+              <span className="gradient-text">QUESTIONS?</span>
+            </h2>
+          </motion.div>
           
-          <div className="space-y-6">
-            {[
-              {
-                q: 'What happens after I buy early access?',
-                a: 'You get immediate access to the beta, lifetime v1.0 access when it launches, and 50% off v2.0 ($49 instead of $99). You also get priority support and can influence the roadmap.',
-              },
-              {
-                q: 'Is v1.0 really free?',
-                a: 'Yes! After the early access period ends, v1.0 will be completely free with all features included. No limitations, no trial period.',
-              },
-              {
-                q: 'Do I need to upgrade to v2.0?',
-                a: 'No. v1.0 will continue to receive security updates and work perfectly. Upgrade only if you want the new v2.0 features like GraphQL, real-time, and advanced monitoring.',
-              },
-              {
-                q: 'What is the legacy version?',
-                a: 'When a version becomes three releases old (e.g., v1.0 when v4.0 releases), it moves to legacy status. You can still download and use it for a one-time $29 fee.',
-              },
-              {
-                q: 'Can I use this commercially?',
-                a: 'Yes! All licenses (including the free v1.0) can be used for commercial projects with no restrictions.',
-              },
-              {
-                q: 'What about team licenses?',
-                a: 'Each developer needs their own license. For teams of 10+, contact us for volume pricing and enterprise features.',
-              },
-            ].map((faq, index) => (
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-slate-800/50 border border-slate-700 rounded-lg p-6"
+                transition={{ delay: index * 0.05 }}
+                className="glass rounded-2xl overflow-hidden"
               >
-                <h3 className="text-xl font-semibold mb-2">{faq.q}</h3>
-                <p className="text-slate-400">{faq.a}</p>
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full p-6 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
+                >
+                  <h3 className="text-lg font-bold pr-4">{faq.q}</h3>
+                  <motion.div
+                    animate={{ rotate: openFaq === index ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronDown className="w-5 h-5 text-white/60 flex-shrink-0" />
+                  </motion.div>
+                </button>
+                
+                <AnimatePresence>
+                  {openFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-6 pb-6 text-white/60 leading-relaxed">{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-purple-500/10 to-pink-500/10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-xl text-slate-400 mb-8">
-            Join early access now and lock in the best pricing forever
-          </p>
-          <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all">
-            Get Early Access - $49
-          </button>
-          <p className="text-slate-400 mt-4 text-sm">
-            One-time payment • No subscription • Lifetime access
-          </p>
+      {/* Final CTA Section */}
+      <section className="py-32 bg-gradient-to-br from-yellow-500/10 via-orange-500/10 to-pink-500/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-yellow-500/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 noise pointer-events-none" />
+        
+        {/* Floating Elements */}
+        <motion.div
+          animate={{ y: [-20, 20, -20], rotate: [0, 10, 0] }}
+          transition={{ duration: 6, repeat: Infinity }}
+          className="absolute top-20 left-20 w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl opacity-20 blur-sm"
+        />
+        <motion.div
+          animate={{ y: [20, -20, 20], rotate: [0, -10, 0] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute bottom-20 right-20 w-32 h-32 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full opacity-20 blur-sm"
+        />
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <h2 className="text-mega font-black tracking-tighter leading-none">
+              READY TO
+              <br />
+              <span className="gradient-text glow">START?</span>
+            </h2>
+            
+            <p className="text-xl sm:text-2xl text-white/70 max-w-2xl mx-auto">
+              Join 500+ developers building faster with Packet.
+              <br />
+              <span className="text-white font-bold">Lock in early access pricing today.</span>
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              <Link
+                to="/pricing"
+                className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-12 py-6 rounded-full font-black text-xl uppercase tracking-wide hover:scale-105 transition-all shadow-2xl shadow-orange-500/50 hover:shadow-orange-500/70 overflow-hidden animate-pulse-glow"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Get Early Access - $49
+                  <ArrowRight className="w-5 h-5" />
+                </span>
+              </Link>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-white/50 pt-4">
+              <span className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-400" />
+                30-day money-back guarantee
+              </span>
+              <span className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-400" />
+                Instant access
+              </span>
+              <span className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-400" />
+                Lifetime updates
+              </span>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
