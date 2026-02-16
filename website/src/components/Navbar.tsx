@@ -11,9 +11,11 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="bg-gradient-to-br from-yellow-400 via-orange-500 to-pink-500 p-3 rounded-2xl group-hover:scale-110 transition-transform shadow-lg">
-              <Zap className="w-6 h-6 text-black" />
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Effec-t SDK Logo" 
+              className="w-12 h-12 group-hover:scale-110 transition-transform"
+            />
             <span className="text-2xl font-black gradient-text uppercase tracking-tight">EFFEC-T</span>
           </Link>
 

@@ -9,9 +9,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-br from-yellow-400 via-orange-500 to-pink-500 p-3 rounded-2xl shadow-lg">
-                <Zap className="w-6 h-6 text-black" />
-              </div>
+              <img 
+                src="/logo.png" 
+                alt="Effec-t SDK Logo" 
+                className="w-12 h-12"
+              />
               <span className="text-2xl font-black gradient-text uppercase tracking-tight">EFFEC-T</span>
             </div>
             <p className="text-white/60 text-sm font-medium uppercase tracking-wide leading-relaxed">
