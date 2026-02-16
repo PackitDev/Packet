@@ -45,39 +45,128 @@ export default function HomePage() {
     <div className="pt-16">
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-screen flex items-center">
+        {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-orange-500/5 to-pink-500/5 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              rotate: [0, 90, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-yellow-500/10 via-orange-500/10 to-pink-500/10 blur-3xl"
+          />
+          <motion.div
+            animate={{
+              scale: [1.2, 1, 1.2],
+              rotate: [90, 0, 90],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-pink-500/10 via-orange-500/10 to-yellow-500/10 blur-3xl"
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-center space-y-12"
           >
-            <div className="inline-flex items-center space-x-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full px-6 py-3">
-              <Package className="w-5 h-5 text-yellow-400" />
-              <span className="text-base text-yellow-400 font-semibold uppercase tracking-wide">Early Access Open</span>
-            </div>
+            {/* Badge */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center space-x-2 bg-yellow-500/10 border-2 border-yellow-500/30 rounded-full px-6 py-3 backdrop-blur-sm hover:bg-yellow-500/20 hover:border-yellow-500/50 transition-all cursor-pointer group"
+            >
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              >
+                <Package className="w-5 h-5 text-yellow-400" />
+              </motion.div>
+              <span className="text-base text-yellow-400 font-semibold uppercase tracking-wide group-hover:text-yellow-300 transition-colors">
+                Early Access Open
+              </span>
+            </motion.div>
             
-            <h1 className="text-huge font-black tracking-tighter leading-none">
+            {/* Main Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-huge font-black tracking-tighter leading-none"
+            >
               THE WORLD'S
               <br />
-              <span className="gradient-text">FASTEST</span>
+              <motion.span
+                className="gradient-text inline-block"
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                style={{
+                  backgroundSize: '200% 200%',
+                }}
+              >
+                FASTEST
+              </motion.span>
               <br />
               SDK.
-            </h1>
+            </motion.h1>
             
-            <p className="max-w-3xl mx-auto text-2xl sm:text-3xl text-white/80 font-medium leading-relaxed uppercase tracking-wide">
-              PACKET ISN'T JUST ABOUT BUILDING APPS (ALTHOUGH, LET'S BE HONEST, THAT'S AMAZING). 
-              IT'S ABOUT TURNING DEVELOPMENT INTO A SUPERPOWER.
-            </p>
+            {/* Subheadline */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="max-w-3xl mx-auto text-2xl sm:text-3xl text-white/80 font-medium leading-relaxed uppercase tracking-wide"
+            >
+              PACKET ISN'T JUST ABOUT BUILDING APPS{' '}
+              <span className="text-white/60">(ALTHOUGH, LET'S BE HONEST, THAT'S AMAZING)</span>. 
+              IT'S ABOUT TURNING DEVELOPMENT INTO A{' '}
+              <span className="gradient-text font-black">SUPERPOWER</span>.
+            </motion.p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8">
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-col sm:flex-row gap-6 justify-center pt-8"
+            >
               <Link
                 to="/pricing"
                 className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black px-12 py-6 rounded-full font-black text-xl uppercase tracking-wide hover:scale-105 transition-all shadow-2xl shadow-orange-500/50 hover:shadow-orange-500/70 overflow-hidden"
               >
-                <span className="relative z-10">Get Started →</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Get Started
+                  <motion.span
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    →
+                  </motion.span>
+                </span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-400"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
               </Link>
               <Link
                 to="/docs"
@@ -86,7 +175,32 @@ export default function HomePage() {
                 <span className="relative z-10">Read Manifesto</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
-            </div>
+            </motion.div>
+
+            {/* Stats Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="flex flex-wrap justify-center gap-8 sm:gap-12 pt-12"
+            >
+              <div className="text-center">
+                <div className="text-4xl sm:text-5xl font-black gradient-text">8s</div>
+                <div className="text-sm text-white/60 uppercase tracking-wider mt-1">Setup Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl sm:text-5xl font-black gradient-text">10x</div>
+                <div className="text-sm text-white/60 uppercase tracking-wider mt-1">Faster Dev</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl sm:text-5xl font-black gradient-text">0</div>
+                <div className="text-sm text-white/60 uppercase tracking-wider mt-1">Config Files</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl sm:text-5xl font-black gradient-text">∞</div>
+                <div className="text-sm text-white/60 uppercase tracking-wider mt-1">Possibilities</div>
+              </div>
+            </motion.div>
 
             {/* Interactive Terminal */}
             <AnimatePresence>
@@ -210,9 +324,19 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-32 bg-gradient-to-b from-black to-yellow-500/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
+      <section className="py-32 bg-gradient-to-b from-black via-black to-yellow-500/5 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-20"
+          >
             <h2 className="text-mega font-black mb-6 tracking-tighter">
               EVERYTHING.
               <br />
@@ -221,7 +345,23 @@ export default function HomePage() {
             <p className="text-2xl text-white/70 font-semibold uppercase tracking-wide">
               NO SETUP. NO CONFIG. JUST BUILD.
             </p>
-          </div>
+            
+            {/* Feature Pills */}
+            <div className="flex flex-wrap justify-center gap-3 mt-8">
+              {['Auth', 'Database', 'Routing', 'Deploy', 'Testing', 'Git Flow'].map((feature, i) => (
+                <motion.span
+                  key={feature}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm font-bold uppercase tracking-wide text-white/80 hover:bg-white/10 hover:border-yellow-500/50 transition-all cursor-default"
+                >
+                  {feature}
+                </motion.span>
+              ))}
+            </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
