@@ -1,10 +1,49 @@
 import { Link } from 'react-router-dom'
-import { Zap, Github, Twitter, Linkedin } from 'lucide-react'
+import { Github, Twitter, Linkedin } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t-2 border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <footer className="relative bg-black border-t-2 border-white/10 overflow-hidden">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-t from-yellow-500/10 via-orange-500/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-yellow-500/20 via-orange-500/10 to-transparent pointer-events-none" />
+      
+      {/* Animated glow orbs */}
+      <motion.div
+        animate={{
+          x: [0, 100, 0],
+          y: [0, -50, 0],
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute -bottom-20 left-1/4 w-96 h-96 bg-gradient-to-r from-yellow-500/30 to-orange-500/30 rounded-full blur-3xl pointer-events-none"
+      />
+      <motion.div
+        animate={{
+          x: [0, -100, 0],
+          y: [0, -30, 0],
+          scale: [1, 1.3, 1],
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+        className="absolute -bottom-20 right-1/4 w-96 h-96 bg-gradient-to-l from-pink-500/30 to-purple-500/30 rounded-full blur-3xl pointer-events-none"
+      />
+      
+      {/* Noise texture */}
+      <div className="absolute inset-0 noise pointer-events-none opacity-50" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="space-y-6">

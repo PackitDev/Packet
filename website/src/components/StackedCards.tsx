@@ -80,7 +80,6 @@ export default function StackedCards() {
               card={card}
               index={index}
               scrollYProgress={scrollYProgress}
-              total={cards.length}
             />
           ))}
         </div>
@@ -92,13 +91,11 @@ export default function StackedCards() {
 function CardItem({ 
   card, 
   index, 
-  scrollYProgress, 
-  total 
+  scrollYProgress
 }: { 
   card: typeof cards[0]
   index: number
   scrollYProgress: any
-  total: number
 }) {
   // Each card reveals at different scroll points
   const start = 0.1 + (index * 0.15)

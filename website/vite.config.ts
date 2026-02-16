@@ -6,5 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3001,
+    hmr: {
+      host: 'elana-electrographic-leon.ngrok-free.dev',
+      protocol: 'wss',
+    },
   },
 })

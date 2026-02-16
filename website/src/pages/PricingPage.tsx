@@ -1,11 +1,10 @@
-import { Check, Zap, Star, Crown, Sparkles, ArrowRight, Shield, Clock, Users, Gift, ChevronDown, X } from 'lucide-react'
+import { Check, Zap, Star, Crown, Sparkles, ArrowRight, Shield, Clock, Users, Gift, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function PricingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [billingCycle, setBillingCycle] = useState<'early' | 'launch'>('early')
 
   const plans = [
     {

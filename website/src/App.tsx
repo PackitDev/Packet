@@ -4,10 +4,12 @@ import PricingPage from './pages/PricingPage'
 import DocsPage from './pages/DocsPage'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
+      <ScrollToTop />
       <Navbar />
       <main className="flex-grow">
         <Routes>

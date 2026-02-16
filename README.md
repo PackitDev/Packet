@@ -1,93 +1,56 @@
-# Effec-t SDK
+# Packet SDK
 
-> The full-stack TypeScript SDK that eliminates boilerplate setup work
+> The full-stack TypeScript framework that eliminates boilerplate
 
-**Version**: 1.0.0 (Beta - Early Access)
+**Status**: 🚧 In Active Development
 
-## What is Effec-t?
+## What is Packet?
 
-Effec-t SDK is a comprehensive full-stack framework that makes building web applications as easy as changing from vanilla JavaScript to React. It provides:
+Packet is a full-stack TypeScript framework designed to make building web applications as simple as switching from vanilla JavaScript to React. Zero configuration, maximum productivity.
 
-- 🚀 **Zero-config setup** - Full-stack app in under 2 minutes
-- 🔐 **Built-in authentication** - JWT, OAuth, sessions, magic links
-- 🗄️ **Database ORM** - Type-safe queries for PostgreSQL, MySQL, SQLite, MongoDB
-- 🛣️ **File-system routing** - Next.js-style routing for both frontend and backend
-- 🌿 **Git workflow management** - Branch-to-environment mapping with auto-deployment
-- 📦 **One-command deployment** - Deploy to Vercel, AWS, Docker, Railway, Fly.io
-- 🧪 **Testing framework** - Built-in utilities for API, database, and auth testing
+**Vision:**
+- 🚀 Create a full-stack app in under 2 minutes
+- 🔐 Built-in authentication (JWT, OAuth, sessions)
+- 🗄️ Type-safe database ORM (PostgreSQL, MySQL, SQLite, MongoDB)
+- 🛣️ File-system routing (Next.js style)
+- 🌿 Git workflow management
+- 📦 One-command deployment
 
-## Quick Start
+## Current Status
 
-```bash
-# Install the CLI
-npm install -g @effec-t/cli
+### ✅ What's Working
+- **Website**: Modern landing page with React + Vite + Tailwind
+  - Location: `website/`
+  - Run: `cd website && npm install && npm run dev`
+  - Live at: [packit.dev](https://packit.dev) (coming soon)
 
-# Create a new project
-effec-t create my-app
+### 🚧 What's Being Built
+- **Core SDK**: Full-stack framework packages
+  - CLI tool for project scaffolding
+  - Database ORM
+  - Authentication system
+  - Auto-routing
+  - Deployment tools
 
-# Start development
-cd my-app
-effec-t dev
-```
-
-## Early Access
-
-Effec-t is currently in **paid early access** at $49 (one-time payment).
-
-**Early Access Benefits:**
-- Shape the product with your feedback
-- Lifetime access to v1.0 when released
-- 50% discount on v2.0 ($49 instead of $99)
-- Early adopter badge
-- Priority support during beta
-
-[Get Early Access →](https://effec-t.dev/early-access)
-
-## Version Roadmap
-
-- **v1.0** (Coming Soon) - FREE for everyone
-- **v2.0** (Future) - $99 with GraphQL, real-time features, monitoring
-- **v3.0+** - Continued innovation with older versions becoming free
-
-## Monorepo Structure
+## Repository Structure
 
 ```
-effec-t-sdk/
-├── packages/
-│   ├── cli/           # CLI tool
-│   ├── core/          # Core runtime framework
-│   ├── auth/          # Authentication module
-│   ├── db/            # Database abstraction
-│   ├── router/        # Auto-routing system
-│   ├── git/           # Git workflow management
-│   ├── deploy/        # Deployment utilities
-│   ├── testing/       # Testing framework
-│   └── license/       # License validation
-├── license-server/    # License & payment API
-├── website/           # Landing page (React + Vite + Tailwind)
+packet-sdk/
+├── website/           # Landing page (WORKING)
+├── packages/          # SDK packages (IN DEVELOPMENT)
+│   ├── cli/          # Command-line interface
+│   ├── core/         # Core runtime
+│   ├── auth/         # Authentication
+│   ├── db/           # Database ORM
+│   ├── router/       # Auto-routing
+│   ├── deploy/       # Deployment
+│   ├── git/          # Git workflows
+│   └── testing/      # Testing utilities
 ├── templates/         # Project templates
 ├── docs/             # Documentation
 └── examples/         # Example projects
+
 ```
-
-## 🌐 Website
-
-A high-quality landing page is available in the `website/` folder:
-
-```bash
-cd website
-npm install
-npm run dev
-```
-
-**Features:**
-- Modern React + TypeScript + Vite stack
-- Tailwind CSS with custom gradients
-- Framer Motion animations
-- Fully responsive design
-- Pages: Home, Pricing, Docs
-
-See [website/README.md](website/README.md) for details.
 
 ## Development
 
@@ -98,26 +61,45 @@ pnpm install
 # Build all packages
 pnpm build
 
-# Run tests
-pnpm test
-
-# Lint code
-pnpm lint
-
-# Format code
-pnpm format
+# Run website locally
+cd website
+npm install
+npm run dev
 ```
 
-## 📚 Documentation
+## Roadmap
 
-- [Quick Start Guide](QUICK_START.md)
-- [CLI Ready Guide](CLI_READY.md)
-- [Testing Guide](TESTING_GUIDE.md)
-- [Final Status Report](FINAL_STATUS.md)
-- [Contributing Guide](CONTRIBUTING.md)
+**Phase 1: Foundation** (Current)
+- [ ] Fix package dependencies
+- [ ] Get CLI working
+- [ ] Basic project scaffolding
+
+**Phase 2: Core Features**
+- [ ] Database ORM implementation
+- [ ] Authentication system
+- [ ] File-based routing
+- [ ] Development server
+
+**Phase 3: Polish**
+- [ ] Deployment integrations
+- [ ] Documentation
+- [ ] Example projects
+- [ ] Testing suite
+
+**Phase 4: Launch**
+- [ ] Beta release
+- [ ] Community feedback
+- [ ] v1.0 release
+
+## Contributing
+
+This is an active work-in-progress. If you want to contribute or follow along:
+- Star the repo
+- Watch for updates
+- Open issues for bugs/suggestions
 
 ## License
 
-Proprietary - Early Access License
+Proprietary - Early Access
 
-© 2026 Effec-t SDK. All rights reserved.
+© 2026 Packet SDK. All rights reserved.

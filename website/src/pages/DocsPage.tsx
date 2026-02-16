@@ -1,4 +1,4 @@
-import { Book, Terminal, Code, Database, Lock, Rocket, Copy, Check, ArrowRight, Zap, GitBranch, TestTube, ChevronRight, ExternalLink } from 'lucide-react'
+import { Book, Terminal, Code, Database, Lock, Rocket, Copy, Check, ArrowRight, Zap, GitBranch, ChevronRight, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
