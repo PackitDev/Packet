@@ -13,10 +13,10 @@ export default function Navbar() {
           <Link to="/" className="flex items-center space-x-3 group">
             <img 
               src="/logo.png" 
-              alt="Effec-t SDK Logo" 
+              alt="Packet SDK Logo" 
               className="w-12 h-12 group-hover:scale-110 transition-transform"
             />
-            <span className="text-2xl font-black gradient-text uppercase tracking-tight">EFFEC-T</span>
+            <span className="text-2xl font-black gradient-text uppercase tracking-tight">PACKET</span>
           </Link>
 
           {/* Desktop Navigation */}

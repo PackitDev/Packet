@@ -11,10 +11,10 @@ export default function Footer() {
             <div className="flex items-center space-x-3">
               <img 
                 src="/logo.png" 
-                alt="Effec-t SDK Logo" 
+                alt="Packet SDK Logo" 
                 className="w-12 h-12"
               />
-              <span className="text-2xl font-black gradient-text uppercase tracking-tight">EFFEC-T</span>
+              <span className="text-2xl font-black gradient-text uppercase tracking-tight">PACKET</span>
             </div>
             <p className="text-white/60 text-sm font-medium uppercase tracking-wide leading-relaxed">
               THE WORLD'S FASTEST SDK FOR BUILDING PRODUCTION APPS.
@@ -115,7 +115,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 pt-8 border-t-2 border-white/10 text-center">
-          <p className="text-white/60 text-sm font-bold uppercase tracking-wider">&copy; 2026 EFFEC-T SDK. ALL RIGHTS RESERVED.</p>
+          <p className="text-white/60 text-sm font-bold uppercase tracking-wider">&copy; 2026 PACKET SDK. ALL RIGHTS RESERVED.</p>
         </div>
       </div>
     </footer>

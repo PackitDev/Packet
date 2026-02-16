@@ -62,7 +62,7 @@ export default function HomePage() {
             </h1>
             
             <p className="max-w-3xl mx-auto text-2xl sm:text-3xl text-white/80 font-medium leading-relaxed uppercase tracking-wide">
-              EFFEC-T ISN'T JUST ABOUT BUILDING APPS (ALTHOUGH, LET'S BE HONEST, THAT'S AMAZING). 
+              PACKET ISN'T JUST ABOUT BUILDING APPS (ALTHOUGH, LET'S BE HONEST, THAT'S AMAZING). 
               IT'S ABOUT TURNING DEVELOPMENT INTO A SUPERPOWER.
             </p>
             
@@ -96,7 +96,7 @@ export default function HomePage() {
                   <span className="text-white/60 text-sm ml-4 font-semibold uppercase tracking-wider">Terminal</span>
                 </div>
                 <div className="p-8 font-mono text-base">
-                  <div className="text-white/80">$ <span className="text-yellow-400 font-bold">effec-t create</span> <span className="text-pink-400">my-app</span></div>
+                  <div className="text-white/80">$ <span className="text-yellow-400 font-bold">packet create</span> <span className="text-pink-400">my-app</span></div>
                   <div className="text-green-400 mt-3 font-semibold">✓ Template: Full-stack TypeScript</div>
                   <div className="text-green-400 font-semibold">✓ Database: PostgreSQL</div>
                   <div className="text-green-400 font-semibold">✓ Auth: JWT</div>
@@ -188,12 +188,12 @@ export default function HomePage() {
               </ul>
             </div>
 
-            {/* With Effec-t */}
+            {/* With Packet */}
             <div className="bg-gradient-to-br from-yellow-500/10 via-orange-500/10 to-pink-500/10 backdrop-blur-sm border-2 border-yellow-500/50 rounded-3xl p-10 relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-yellow-400 text-black px-6 py-2 font-black text-sm uppercase tracking-wider rotate-12 translate-x-8 -translate-y-2">
                 NEW!
               </div>
-              <h3 className="text-4xl font-black mb-8 gradient-text uppercase tracking-tight">WITH EFFEC-T</h3>
+              <h3 className="text-4xl font-black mb-8 gradient-text uppercase tracking-tight">WITH PACKET</h3>
               <ul className="space-y-5">
                 <li className="flex items-start space-x-4">
                   <span className="text-green-400 text-3xl font-bold">✓</span>
