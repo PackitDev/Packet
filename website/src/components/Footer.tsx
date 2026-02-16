@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Github, Twitter, Linkedin } from 'lucide-react'
+import { Twitter, Linkedin } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 export default function Footer() {
@@ -59,13 +59,10 @@ export default function Footer() {
               THE WORLD'S FASTEST SDK FOR BUILDING PRODUCTION APPS.
             </p>
             <div className="flex space-x-5">
-              <a href="#" className="text-white/60 hover:text-yellow-400 transition-colors">
-                <Github className="w-6 h-6" />
-              </a>
-              <a href="#" className="text-white/60 hover:text-yellow-400 transition-colors">
+              <a href="https://twitter.com/packetsdk" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-yellow-400 transition-colors">
                 <Twitter className="w-6 h-6" />
               </a>
-              <a href="#" className="text-white/60 hover:text-yellow-400 transition-colors">
+              <a href="https://youtube.com/@packetsdk" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-yellow-400 transition-colors">
                 <Linkedin className="w-6 h-6" />
               </a>
             </div>
@@ -91,9 +88,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
+                <Link to="/changelog" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
                   Changelog
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -103,24 +100,24 @@ export default function Footer() {
             <h3 className="text-white font-black mb-6 uppercase tracking-wide text-sm">Resources</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
+                <Link to="/blog" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
                   Blog
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
+                <Link to="/guides" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
                   Guides
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
+                <Link to="/examples" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
                   Examples
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
+                <Link to="/community" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
                   Community
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -130,24 +127,24 @@ export default function Footer() {
             <h3 className="text-white font-black mb-6 uppercase tracking-wide text-sm">Company</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
+                <Link to="/about" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
+                <Link to="/contact" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
                   Contact
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
+                <Link to="/privacy" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
                   Privacy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
+                <Link to="/terms" className="text-white/60 hover:text-white transition-colors text-sm font-semibold uppercase tracking-wide">
                   Terms
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

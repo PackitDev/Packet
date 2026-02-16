@@ -5,6 +5,7 @@ import { config } from 'dotenv';
 import licensesRouter from './api/licenses.js';
 import versionsRouter from './api/versions.js';
 import webhooksRouter from './api/webhooks.js';
+import authRouter from './api/auth.js';
 
 // Load environment variables
 config();
@@ -23,6 +24,7 @@ app.use('/api/webhooks/stripe', express.raw({ type: 'application/json' }));
 app.use(express.json());
 
 // Routes
+app.use('/api/auth', authRouter);
 app.use('/api/licenses', licensesRouter);
 app.use('/api/versions', versionsRouter);
 app.use('/api/webhooks', webhooksRouter);

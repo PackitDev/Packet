@@ -271,7 +271,7 @@ export default function PricingPage() {
             <h2 className="text-mega font-black mb-6 tracking-tighter">
               VERSION
               <br />
-              <span className="gradient-text">LIFECYCLE.</span>
+              <span className="bg-gradient-to-r from-orange-400 via-yellow-400 via-pink-500 to-pink-600 bg-clip-text text-transparent">LIFECYCLE.</span>
             </h2>
             <p className="text-xl text-white/60">
               Our unique pricing model rewards early adopters
@@ -280,8 +280,8 @@ export default function PricingPage() {
 
           {/* Timeline */}
           <div className="relative">
-            {/* Vertical Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-green-400 via-blue-500 via-purple-500 to-orange-500 hidden md:block rounded-full" />
+            {/* Vertical Line with proper gradient stops */}
+            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-green-400 via-blue-500 via-30% via-purple-500 via-60% to-orange-500 hidden md:block rounded-full" />
             
             <div className="space-y-6">
               {/* v1.0 */}

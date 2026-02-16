@@ -112,7 +112,7 @@ export default function HomePage() {
                 <Package className="w-5 h-5 text-yellow-400" />
               </motion.div>
               <span className="text-base text-yellow-400 font-semibold uppercase tracking-wide group-hover:text-yellow-300 transition-colors">
-                Early Access Open
+                Beta Now Available
               </span>
             </motion.div>
             
@@ -163,7 +163,7 @@ export default function HomePage() {
                 Start <span className="gradient-text">shipping</span>. Start <span className="gradient-text">building</span>. Start <span className="gradient-text">winning</span>.
               </p>
               <p className="text-lg text-white/50 font-medium">
-                From zero to production in under 60 seconds. No joke.
+                From zero to production in under 60 seconds. Currently in beta.
               </p>
             </motion.div>
             
@@ -253,7 +253,7 @@ export default function HomePage() {
                     </div>
                   ))}
                 </div>
-                <span className="font-semibold">500+ developers</span>
+                <span className="font-semibold">50+ beta testers</span>
               </div>
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
@@ -696,7 +696,7 @@ export default function HomePage() {
               />
             </Link>
             <p className="text-white/60 mt-8 text-lg font-semibold uppercase tracking-wider">
-              $49 ONE-TIME • NO SUBSCRIPTION • FOREVER
+              BETA PRICING • NO SUBSCRIPTION • LIFETIME ACCESS
             </p>
             
             {/* Trust Badges */}

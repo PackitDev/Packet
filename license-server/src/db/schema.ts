@@ -3,6 +3,10 @@ import { pgTable, text, timestamp, integer, boolean, jsonb, uuid } from 'drizzle
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   email: text('email').notNull().unique(),
+  name: text('name'),
+  avatar: text('avatar'),
+  githubId: text('github_id').unique(),
+  githubUsername: text('github_username'),
   stripeCustomerId: text('stripe_customer_id'),
   isEarlyAccessUser: boolean('is_early_access_user').default(false),
   createdAt: timestamp('created_at').defaultNow(),
