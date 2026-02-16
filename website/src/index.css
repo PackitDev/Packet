@@ -6,11 +6,13 @@
 
 @layer base {
   body {
-    @apply bg-black text-white antialiased font-body;
+    @apply bg-black text-white antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
+    @apply font-bold;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 }
 
