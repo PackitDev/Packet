@@ -31,7 +31,7 @@ export default function Navbar() {
               Docs
             </Link>
             <a
-              href="https://github.com/effec-t/sdk"
+              href="https://github.com/packetsdk/packet"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide text-sm"
@@ -77,7 +77,7 @@ export default function Navbar() {
               Docs
             </Link>
             <a
-              href="https://github.com/effec-t/sdk"
+              href="https://github.com/packetsdk/packet"
               target="_blank"
               rel="noopener noreferrer"
               className="block text-white/80 hover:text-white transition-colors font-bold uppercase tracking-wide"
