@@ -282,38 +282,88 @@ export default function PricingPage() {
           {/* Timeline */}
           <div className="relative">
             {/* Vertical Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-yellow-400 via-orange-500 to-pink-500 hidden md:block" />
+            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-green-400 via-blue-500 via-purple-500 to-orange-500 hidden md:block rounded-full" />
             
-            <div className="space-y-8">
-              {[
-                { version: 'v1.0', status: 'FREE', desc: 'Full-featured, completely free forever', color: 'green', icon: <Zap className="w-6 h-6" /> },
-                { version: 'v2.0', status: '$99', desc: 'Advanced features, GraphQL, real-time', color: 'blue', icon: <Star className="w-6 h-6" /> },
-                { version: 'v3.0', status: '$149', desc: 'When released, v2.0 gets security updates only', color: 'purple', icon: <Sparkles className="w-6 h-6" /> },
-                { version: 'v4.0', status: '$199', desc: 'When released, v2.0 becomes FREE', color: 'orange', icon: <Crown className="w-6 h-6" /> },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex gap-6 items-start"
-                >
-                  {/* Icon */}
-                  <div className={`w-16 h-16 rounded-2xl bg-${item.color}-500/20 border-2 border-${item.color}-500/50 flex items-center justify-center flex-shrink-0 text-${item.color}-400`}>
-                    {item.icon}
+            <div className="space-y-6">
+              {/* v1.0 */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0 }}
+                className="flex gap-6 items-start"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-green-500/20 border-2 border-green-500/50 flex items-center justify-center flex-shrink-0 text-green-400 relative z-10">
+                  <Zap className="w-6 h-6" />
+                </div>
+                <div className="glass rounded-2xl p-6 flex-grow hover:border-green-500/30 transition-colors">
+                  <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+                    <h3 className="text-2xl font-black">v1.0</h3>
+                    <span className="text-2xl font-black text-green-400">FREE</span>
                   </div>
-                  
-                  {/* Content */}
-                  <div className="glass rounded-2xl p-6 flex-grow">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-2xl font-black">{item.version}</h3>
-                      <span className={`text-2xl font-black text-${item.color}-400`}>{item.status}</span>
-                    </div>
-                    <p className="text-white/60">{item.desc}</p>
+                  <p className="text-white/60">Full-featured, completely free forever</p>
+                </div>
+              </motion.div>
+
+              {/* v2.0 */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="flex gap-6 items-start"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-blue-500/20 border-2 border-blue-500/50 flex items-center justify-center flex-shrink-0 text-blue-400 relative z-10">
+                  <Star className="w-6 h-6" />
+                </div>
+                <div className="glass rounded-2xl p-6 flex-grow hover:border-blue-500/30 transition-colors">
+                  <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+                    <h3 className="text-2xl font-black">v2.0</h3>
+                    <span className="text-2xl font-black text-blue-400">$99</span>
                   </div>
-                </motion.div>
-              ))}
+                  <p className="text-white/60">Advanced features, GraphQL, real-time</p>
+                </div>
+              </motion.div>
+
+              {/* v3.0 */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="flex gap-6 items-start"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-purple-500/20 border-2 border-purple-500/50 flex items-center justify-center flex-shrink-0 text-purple-400 relative z-10">
+                  <Sparkles className="w-6 h-6" />
+                </div>
+                <div className="glass rounded-2xl p-6 flex-grow hover:border-purple-500/30 transition-colors">
+                  <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+                    <h3 className="text-2xl font-black">v3.0</h3>
+                    <span className="text-2xl font-black text-purple-400">$149</span>
+                  </div>
+                  <p className="text-white/60">When released, v2.0 gets security updates only</p>
+                </div>
+              </motion.div>
+
+              {/* v4.0 */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="flex gap-6 items-start"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-orange-500/20 border-2 border-orange-500/50 flex items-center justify-center flex-shrink-0 text-orange-400 relative z-10">
+                  <Crown className="w-6 h-6" />
+                </div>
+                <div className="glass rounded-2xl p-6 flex-grow hover:border-orange-500/30 transition-colors">
+                  <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+                    <h3 className="text-2xl font-black">v4.0</h3>
+                    <span className="text-2xl font-black text-orange-400">$199</span>
+                  </div>
+                  <p className="text-white/60">When released, v2.0 becomes FREE</p>
+                </div>
+              </motion.div>
             </div>
           </div>
 
