@@ -6,6 +6,10 @@ import AnimatedCounter from '../components/AnimatedCounter'
 import GlowingCard from '../components/GlowingCard'
 import TypeWriter from '../components/TypeWriter'
 import ParticleBackground from '../components/ParticleBackground'
+import HorizontalScroll from '../components/HorizontalScroll'
+import ScrollReveal from '../components/ScrollReveal'
+import ParallaxText from '../components/ParallaxText'
+import StackedCards from '../components/StackedCards'
 
 export default function HomePage() {
   const [terminalVisible, setTerminalVisible] = useState(true)
@@ -379,6 +383,21 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Parallax Text Banner */}
+      <ParallaxText baseVelocity={0.5}>SHIP FASTER • BUILD BETTER • SCALE EASIER •</ParallaxText>
+
+      {/* Horizontal Scroll Section */}
+      <HorizontalScroll />
+
+      {/* Stacked Cards Section */}
+      <StackedCards />
+
+      {/* Scroll Reveal Stats */}
+      <ScrollReveal />
+
+      {/* Another Parallax Text */}
+      <ParallaxText baseVelocity={-0.3}>PACKET SDK • PACKET SDK • PACKET SDK •</ParallaxText>
 
       {/* Features Section */}
       <section className="py-32 bg-gradient-to-b from-black via-black to-yellow-500/5 relative overflow-hidden">
