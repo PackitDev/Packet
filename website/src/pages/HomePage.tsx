@@ -108,32 +108,34 @@ export default function HomePage() {
                       <div className="flex items-center space-x-3">
                         <button
                           onClick={() => setTerminalVisible(false)}
-                          className="w-4 h-4 rounded-full bg-red-500 hover:bg-red-600 transition-colors cursor-pointer hover:scale-110 active:scale-95"
+                          className="w-3.5 h-3.5 rounded-full bg-red-500 hover:bg-red-600 transition-all cursor-pointer hover:scale-110 active:scale-95 flex items-center justify-center group"
                           title="Close"
-                        />
+                        >
+                          <X className="w-2 h-2 text-red-900 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </button>
                         <button
                           onClick={() => {
                             setTerminalMinimized(!terminalMinimized)
                             setTerminalMaximized(false)
                           }}
-                          className="w-4 h-4 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer hover:scale-110 active:scale-95"
+                          className="w-3.5 h-3.5 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-all cursor-pointer hover:scale-110 active:scale-95 flex items-center justify-center group"
                           title="Minimize"
-                        />
+                        >
+                          <Minimize2 className="w-2 h-2 text-yellow-900 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </button>
                         <button
                           onClick={() => {
                             setTerminalMaximized(!terminalMaximized)
                             setTerminalMinimized(false)
                           }}
-                          className="w-4 h-4 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer hover:scale-110 active:scale-95 flex items-center justify-center"
+                          className="w-3.5 h-3.5 rounded-full bg-green-500 hover:bg-green-600 transition-all cursor-pointer hover:scale-110 active:scale-95 flex items-center justify-center group"
                           title="Maximize"
-                        />
+                        >
+                          <Maximize2 className="w-2 h-2 text-green-900 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </button>
                       </div>
                       <div className="flex items-center space-x-3">
                         <span className="text-white/60 text-sm font-semibold uppercase tracking-wider">Terminal</span>
-                        <div className="flex space-x-1">
-                          {terminalMinimized && <Minimize2 className="w-4 h-4 text-white/40" />}
-                          {terminalMaximized && <Maximize2 className="w-4 h-4 text-white/40" />}
-                        </div>
                       </div>
                     </div>
 
@@ -148,94 +150,41 @@ export default function HomePage() {
                           className="overflow-hidden"
                         >
                           <div className={`p-8 font-mono ${terminalMaximized ? 'text-lg' : 'text-base'}`}>
-                            <motion.div
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.1 }}
-                              className="text-white/80"
-                            >
+                            <div className="text-white/80">
                               $ <span className="text-yellow-400 font-bold">packet create</span> <span className="text-pink-400">my-app</span>
-                            </motion.div>
+                            </div>
                             
-                            <motion.div
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.3 }}
-                              className="text-green-400 mt-3 font-semibold"
-                            >
+                            <div className="text-green-400 mt-3 font-semibold">
                               ✓ Template: Full-stack TypeScript
-                            </motion.div>
+                            </div>
                             
-                            <motion.div
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.4 }}
-                              className="text-green-400 font-semibold"
-                            >
+                            <div className="text-green-400 font-semibold">
                               ✓ Database: PostgreSQL
-                            </motion.div>
+                            </div>
                             
-                            <motion.div
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.5 }}
-                              className="text-green-400 font-semibold"
-                            >
+                            <div className="text-green-400 font-semibold">
                               ✓ Auth: JWT
-                            </motion.div>
+                            </div>
                             
-                            <motion.div
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: 0.7 }}
-                              className="text-yellow-400 mt-4 font-bold text-lg"
-                            >
+                            <div className="text-yellow-400 mt-4 font-bold text-lg">
                               ✓ PROJECT CREATED IN 8 SECONDS!
-                            </motion.div>
+                            </div>
                             
-                            <motion.div
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.9 }}
-                              className="text-white/80 mt-6"
-                            >
+                            <div className="text-white/80 mt-6">
                               $ <span className="text-yellow-400 font-bold">npm run dev</span>
-                            </motion.div>
+                            </div>
                             
-                            <motion.div
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 1.1 }}
-                              className="text-orange-400 mt-3 font-bold"
-                            >
+                            <div className="text-orange-400 mt-3 font-bold">
                               → RUNNING ON http://localhost:3000
-                            </motion.div>
+                            </div>
                             
-                            <motion.div
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 1.3 }}
-                              className="text-white/60 mt-2"
-                            >
+                            <div className="text-white/60 mt-2">
                               → Ready to ship 🚀
-                            </motion.div>
+                            </div>
                           </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
-
-                    {/* Minimized State */}
-                    {terminalMinimized && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="px-6 py-3 text-center"
-                      >
-                        <span className="text-white/40 text-sm font-semibold uppercase tracking-wider">
-                          Terminal Minimized
-                        </span>
-                      </motion.div>
-                    )}
                   </div>
                 </motion.div>
               )}
