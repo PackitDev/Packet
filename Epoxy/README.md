@@ -4,6 +4,8 @@
 
 Epoxy is the visual powerhouse of Packet — configure everything through a beautiful desktop UI instead of editing config files.
 
+> **Note**: This is designed to be a standalone repository. If you're setting up Epoxy for the first time, see [DEPLOYMENT.md](./DEPLOYMENT.md) for instructions on creating the GitHub repository and enabling automated builds.
+
 ## Features
 
 - 🎨 **Visual Configuration** - Toggle features, edit env vars, manage packages through the UI
