@@ -16,9 +16,9 @@ export default function DashboardEpoxy() {
   };
 
   const downloads = [
-    { platform: 'Windows', icon: <Monitor className="w-8 h-8" />, file: 'Epoxy-Setup.exe', color: 'from-yellow-400 via-orange-500 to-pink-500' },
-    { platform: 'macOS', icon: <Apple className="w-8 h-8" />, file: 'Epoxy.dmg', color: 'from-yellow-400 via-orange-500 to-pink-500' },
-    { platform: 'Linux', icon: <Package className="w-8 h-8" />, file: 'epoxy.AppImage', color: 'from-yellow-400 via-orange-500 to-pink-500' },
+    { platform: 'Windows', icon: <Monitor className="w-8 h-8" />, file: 'Epoxy-Setup.exe', color: 'from-yellow-400 via-orange-500 to-pink-500', available: true },
+    { platform: 'macOS', icon: <Apple className="w-8 h-8" />, file: 'Epoxy.dmg', color: 'from-yellow-400 via-orange-500 to-pink-500', available: false },
+    { platform: 'Linux', icon: <Package className="w-8 h-8" />, file: 'epoxy.AppImage', color: 'from-yellow-400 via-orange-500 to-pink-500', available: false },
   ];
 
   return (
@@ -151,13 +151,23 @@ export default function DashboardEpoxy() {
                 {item.icon}
               </div>
               <h3 className="text-xl font-black mb-2 uppercase tracking-tight">{item.platform}</h3>
-              <p className="text-white/60 mb-4 text-sm">Epoxy Desktop</p>
-              <button
-                disabled
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-pink-500/20 text-orange-400 font-bold uppercase tracking-wide hover:from-yellow-500/30 hover:via-orange-500/30 hover:to-pink-500/30 transition-all cursor-not-allowed opacity-70"
-              >
-                Coming Soon
-              </button>
+              <p className="text-white/60 mb-4 text-sm">Epoxy Desktop v1.0.0-beta.1</p>
+              {item.available ? (
+                <a
+                  href={`/downloads/${item.file}`}
+                  download
+                  className="block w-full py-3 rounded-xl bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-pink-500/20 text-orange-400 font-bold uppercase tracking-wide hover:from-yellow-500/30 hover:via-orange-500/30 hover:to-pink-500/30 transition-all text-center border-2 border-pink-500/30"
+                >
+                  Download
+                </a>
+              ) : (
+                <button
+                  disabled
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-pink-500/20 text-orange-400 font-bold uppercase tracking-wide cursor-not-allowed opacity-70"
+                >
+                  Coming Soon
+                </button>
+              )}
             </motion.div>
           ))}
         </div>
