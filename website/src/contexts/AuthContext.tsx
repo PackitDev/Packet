@@ -7,6 +7,7 @@ interface User {
   avatar: string;
   githubUsername: string;
   licenseKey?: string;
+  epoxyLicenseKey?: string;
 }
 
 interface AuthContextType {

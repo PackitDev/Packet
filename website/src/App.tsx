@@ -11,6 +11,7 @@ import AuthCallback from './pages/AuthCallback'
 
 // Dashboard pages
 import DashboardOverview from './pages/dashboard/Overview'
+import DashboardEpoxy from './pages/dashboard/Epoxy'
 import DashboardLicense from './pages/dashboard/License'
 import DashboardDownloads from './pages/dashboard/Downloads'
 import DashboardSettings from './pages/dashboard/Settings'
@@ -44,6 +45,13 @@ function App() {
           <ProtectedRoute>
             <DashboardLayout>
               <DashboardOverview />
+            </DashboardLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/dashboard/epoxy" element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <DashboardEpoxy />
             </DashboardLayout>
           </ProtectedRoute>
         } />

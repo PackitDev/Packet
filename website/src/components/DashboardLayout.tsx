@@ -9,6 +9,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   const navigation = [
     { name: 'Overview', href: '/dashboard', icon: Home },
+    { name: 'Epoxy', href: '/dashboard/epoxy', icon: 'epoxy' as const },
     { name: 'License', href: '/dashboard/license', icon: Key },
     { name: 'Downloads', href: '/dashboard/downloads', icon: Download },
     { name: 'Docs', href: '/docs', icon: Book },
@@ -45,7 +46,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {navigation.map((item) => {
-            const Icon = item.icon;
+            const Icon = item.icon === 'epoxy' ? null : item.icon;
             const isActive = location.pathname === item.href;
             return (
               <Link
@@ -53,11 +54,17 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 to={item.href}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-semibold uppercase tracking-wide text-sm ${
                   isActive
-                    ? 'bg-yellow-500/20 text-yellow-400 border-2 border-yellow-500/30'
+                    ? item.icon === 'epoxy'
+                      ? 'bg-pink-500/20 text-pink-400 border-2 border-pink-500/30'
+                      : 'bg-yellow-500/20 text-yellow-400 border-2 border-yellow-500/30'
                     : 'text-white/60 hover:text-white hover:bg-white/5 border-2 border-transparent'
                 }`}
               >
-                <Icon className="w-5 h-5" />
+                {item.icon === 'epoxy' ? (
+                  <img src="/epoxy-logo.png" alt="Epoxy" className="w-6 h-6 rounded-lg" />
+                ) : Icon ? (
+                  <Icon className="w-5 h-5" />
+                ) : null}
                 <span>{item.name}</span>
               </Link>
             );
