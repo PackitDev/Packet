@@ -11,9 +11,10 @@ router.post('/validate', async (req: Request, res: Response) => {
     const schema = z.object({
       key: z.string(),
       version: z.string(),
+      product: z.enum(['packet', 'epoxy']).optional(),
     });
 
-    const { key } = schema.parse(req.body);
+    const { key, product } = schema.parse(req.body);
 
     const license = await db.query.licenses.findFirst({
       where: eq(licenses.key, key),
@@ -29,6 +30,28 @@ router.post('/validate', async (req: Request, res: Response) => {
       });
     }
 
+    // Epoxy keys: only accept license with product='epoxy'
+    if (product === 'epoxy') {
+      const licenseProduct = (license as any).product ?? 'packet';
+      if (licenseProduct !== 'epoxy') {
+        return res.status(403).json({
+          valid: false,
+          error: 'This is a Packet license key. Use your Epoxy key from the dashboard.',
+        });
+      }
+    }
+
+    // Packet keys: reject epoxy licenses when product=packet (e.g. CLI)
+    if (product === 'packet') {
+      const licenseProduct = (license as any).product ?? 'packet';
+      if (licenseProduct === 'epoxy') {
+        return res.status(403).json({
+          valid: false,
+          error: 'This is an Epoxy license key. Use your Packet key for the CLI.',
+        });
+      }
+    }
+
     if (license.status !== 'active') {
       return res.status(403).json({
         valid: false,
@@ -40,6 +63,8 @@ router.post('/validate', async (req: Request, res: Response) => {
       where: eq(versions.version, license.version),
     });
 
+    const maxActivations = product === 'epoxy' ? 3 : 2;
+
     return res.json({
       valid: true,
       license: {
@@ -48,7 +73,7 @@ router.post('/validate', async (req: Request, res: Response) => {
         status: license.status,
         isEarlyAccess: license.isEarlyAccess,
         activations: license.activations || 0,
-        maxActivations: 3,
+        maxActivations,
       },
       version: versionInfo,
     });
@@ -67,9 +92,10 @@ router.post('/activate', async (req: Request, res: Response) => {
       key: z.string(),
       machineId: z.string(),
       version: z.string(),
+      product: z.enum(['packet', 'epoxy']).optional(),
     });
 
-    const { key, machineId } = schema.parse(req.body);
+    const { key, machineId, product } = schema.parse(req.body);
 
     const license = await db.query.licenses.findFirst({
       where: eq(licenses.key, key),
@@ -82,12 +108,36 @@ router.post('/activate', async (req: Request, res: Response) => {
       });
     }
 
+    // Epoxy keys: only accept license with product='epoxy'
+    if (product === 'epoxy') {
+      const licenseProduct = (license as any).product ?? 'packet';
+      if (licenseProduct !== 'epoxy') {
+        return res.status(403).json({
+          success: false,
+          error: 'This is a Packet license key. Use your Epoxy key from the dashboard.',
+        });
+      }
+    }
+
+    // Packet keys: reject epoxy licenses
+    if (product === 'packet') {
+      const licenseProduct = (license as any).product ?? 'packet';
+      if (licenseProduct === 'epoxy') {
+        return res.status(403).json({
+          success: false,
+          error: 'This is an Epoxy license key. Use your Packet key for the CLI.',
+        });
+      }
+    }
+
     if (license.status !== 'active') {
       return res.status(403).json({
         success: false,
         error: 'License is not active',
       });
     }
+
+    const maxActivations = product === 'epoxy' ? 3 : 2;
 
     // Check if machine is already activated
     const existingActivation = await db.query.machineActivations.findFirst({
@@ -100,10 +150,10 @@ router.post('/activate', async (req: Request, res: Response) => {
     if (!existingActivation) {
       // Check activation limit
       const currentActivations = license.activations || 0;
-      if (currentActivations >= 3) {
+      if (currentActivations >= maxActivations) {
         return res.status(403).json({
           success: false,
-          error: 'Maximum activations reached (3)',
+          error: `Maximum activations reached (${maxActivations} machines)`,
         });
       }
 
@@ -128,7 +178,7 @@ router.post('/activate', async (req: Request, res: Response) => {
         status: license.status,
         isEarlyAccess: license.isEarlyAccess,
         activations: (license.activations || 0) + (existingActivation ? 0 : 1),
-        maxActivations: 3,
+        maxActivations,
       },
     });
   } catch (error) {

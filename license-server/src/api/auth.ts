@@ -29,7 +29,7 @@ router.post('/github', async (req: Request, res: Response) => {
       }),
     });
 
-    const tokenData = await tokenResponse.json();
+    const tokenData: any = await tokenResponse.json();
 
     if (tokenData.error) {
       return res.status(400).json({ error: tokenData.error_description || 'GitHub OAuth failed' });
@@ -41,13 +41,13 @@ router.post('/github', async (req: Request, res: Response) => {
     const profileResponse = await fetch('https://api.github.com/user', {
       headers: { Authorization: `Bearer ${access_token}` },
     });
-    const profile = await profileResponse.json();
+    const profile: any = await profileResponse.json();
 
     // Get user emails
     const emailResponse = await fetch('https://api.github.com/user/emails', {
       headers: { Authorization: `Bearer ${access_token}` },
     });
-    const emails = await emailResponse.json();
+    const emails: any = await emailResponse.json();
     const primaryEmail = emails.find((e: any) => e.primary)?.email || profile.email;
 
     if (!primaryEmail) {
@@ -93,24 +93,39 @@ router.post('/github', async (req: Request, res: Response) => {
           .returning();
         user = newUser;
 
-        // Generate license key for new user
+        // Generate license keys for new user (Packet + Epoxy)
         const licenseKey = `PACKET-${nanoid(16).toUpperCase()}`;
         await db.insert(licenses).values({
           key: licenseKey,
-          version: 'v1.0-beta',
+          version: '1.0.0-beta.1',
+          product: 'packet',
           userId: user.id,
           status: 'active',
           purchasePrice: 0, // Free early access
           isEarlyAccess: true,
           activations: 0,
         });
+        const epoxyKey = `EPOXY-${nanoid(16).toUpperCase().replace(/(.{4})/g, '$1-').slice(0, -1)}`;
+        await db.insert(licenses).values({
+          key: epoxyKey,
+          version: '1.0.0-beta.1',
+          product: 'epoxy',
+          userId: user.id,
+          status: 'active',
+          purchasePrice: 0, // Free
+          isEarlyAccess: true,
+          activations: 0,
+        });
       }
     }
 
-    // Get license key
-    const license = await db.query.licenses.findFirst({
+    // Get license keys
+    const userLicenses = await db.query.licenses.findMany({
       where: eq(licenses.userId, user.id),
+      columns: { key: true, product: true },
     });
+    const packetLicense = userLicenses.find((l) => l.product !== 'epoxy');
+    const epoxyLicense = userLicenses.find((l) => l.product === 'epoxy');
 
     // Generate JWT
     const token = jwt.sign(
@@ -127,7 +142,8 @@ router.post('/github', async (req: Request, res: Response) => {
         name: user.name,
         avatar: user.avatar,
         githubUsername: user.githubUsername,
-        licenseKey: license?.key,
+        licenseKey: packetLicense?.key,
+        epoxyLicenseKey: epoxyLicense?.key,
       },
     });
   } catch (error) {
@@ -147,9 +163,31 @@ router.get('/me', authenticateToken, async (req: any, res: Response) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const license = await db.query.licenses.findFirst({
+    const userLicenses = await db.query.licenses.findMany({
       where: eq(licenses.userId, req.userId),
+      columns: { key: true, product: true },
     });
+
+    const packetLicense = userLicenses.find((l) => l.product !== 'epoxy');
+    const epoxyLicense = userLicenses.find((l) => l.product === 'epoxy');
+    const packetKey = packetLicense?.key ?? null;
+    let epoxyKey = epoxyLicense?.key ?? null;
+
+    // Create free Epoxy license for existing users who don't have one
+    if (!epoxyKey && packetKey) {
+      const newEpoxyKey = `EPOXY-${nanoid(16).toUpperCase().replace(/(.{4})/g, '$1-').slice(0, -1)}`;
+      await db.insert(licenses).values({
+        key: newEpoxyKey,
+        version: '1.0.0-beta.1',
+        product: 'epoxy',
+        userId: user.id,
+        status: 'active',
+        purchasePrice: 0,
+        isEarlyAccess: true,
+        activations: 0,
+      });
+      epoxyKey = newEpoxyKey;
+    }
 
     res.json({
       user: {
@@ -158,7 +196,8 @@ router.get('/me', authenticateToken, async (req: any, res: Response) => {
         name: user.name,
         avatar: user.avatar,
         githubUsername: user.githubUsername,
-        licenseKey: license?.key,
+        licenseKey: packetKey || packetLicense?.key,
+        epoxyLicenseKey: epoxyKey,
       },
     });
   } catch (error) {

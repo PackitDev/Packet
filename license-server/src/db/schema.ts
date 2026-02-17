@@ -16,6 +16,7 @@ export const licenses = pgTable('licenses', {
   id: uuid('id').primaryKey().defaultRandom(),
   key: text('key').notNull().unique(),
   version: text('version').notNull(),
+  product: text('product').notNull().default('packet'), // 'packet' | 'epoxy'
   userId: uuid('user_id').references(() => users.id),
   stripePaymentId: text('stripe_payment_id'),
   status: text('status').notNull().default('active'), // 'active' | 'revoked'

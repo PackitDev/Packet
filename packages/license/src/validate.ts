@@ -34,6 +34,7 @@ export async function validateLicense(
       body: JSON.stringify({
         key,
         version: LICENSE_CONFIG.CURRENT_VERSION,
+        product: 'packet',
       }),
     });
 
@@ -77,10 +78,11 @@ export async function activateLicense(key: string): Promise<LicenseActivationRes
   try {
     const machineId = getMachineId();
 
-    const request: LicenseActivationRequest = {
+    const request: LicenseActivationRequest & { product?: string } = {
       key,
       machineId,
       version: LICENSE_CONFIG.CURRENT_VERSION,
+      product: 'packet',
     };
 
     const response = await fetch(`${LICENSE_CONFIG.API_URL}/api/licenses/activate`, {
