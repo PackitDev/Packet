@@ -5,6 +5,12 @@ Deploy your Packet application to production.
 ## Quick Deploy
 
 ```bash
+# Using standalone executable
+./packet build
+./packet deploy
+
+# Or if installed system-wide
+packet build
 packet deploy
 ```
 
@@ -123,15 +129,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-      - run: npm install
-      - run: npm run build
-      - run: packet deploy --platform docker
+      
+      - name: Download Packet
+        run: |
+          curl -L https://packetsdk.dev/downloads/standalone/packet-linux-x64 -o packet
+          chmod +x packet
+      
+      - name: Build and Deploy
+        run: |
+          ./packet build
+          ./packet deploy --platform docker
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PACKET_LICENSE: ${{ secrets.PACKET_LICENSE }}
 ```
 
 ## Monitoring

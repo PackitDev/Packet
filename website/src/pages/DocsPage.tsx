@@ -11,18 +11,19 @@ export default function DocsPage() {
     setTimeout(() => setCopiedIndex(null), 2000)
   }
 
-  const installMethods = [
-    { name: 'NPM', code: 'npm install -g @packet/cli', icon: '📦' },
-    { name: 'Yarn', code: 'yarn global add @packet/cli', icon: '🧶' },
-    { name: 'Bun', code: 'bun install -g @packet/cli', icon: '🥟' },
-    { name: 'pnpm', code: 'pnpm add -g @packet/cli', icon: '⚡' },
+  const platforms = [
+    { name: 'Windows', code: '.\\packet-windows-x64.exe', icon: '🪟', file: 'packet-windows-x64.exe' },
+    { name: 'macOS (Intel)', code: './packet-macos-x64', icon: '🍎', file: 'packet-macos-x64' },
+    { name: 'macOS (M1/M2/M3)', code: './packet-macos-arm64', icon: '🍎', file: 'packet-macos-arm64' },
+    { name: 'Linux', code: './packet-linux-x64', icon: '🐧', file: 'packet-linux-x64' },
   ]
 
   const quickStartSteps = [
-    { title: 'Install Packet CLI', code: 'npm install -g @packet/cli' },
-    { title: 'Create a new project', code: 'npx create-packet-app my-app' },
-    { title: 'Navigate to project', code: 'cd my-app' },
-    { title: 'Start dev server', code: 'packet dev' },
+    { title: 'Download executable', code: '# Get it from /dashboard/downloads' },
+    { title: 'Make executable (Unix)', code: 'chmod +x packet-macos-arm64' },
+    { title: 'Activate license', code: './packet-macos-arm64 license YOUR-KEY' },
+    { title: 'Create project', code: './packet-macos-arm64 create my-app' },
+    { title: 'Start dev server', code: 'cd my-app && ../packet-macos-arm64 dev' },
     { title: 'Open in browser', code: '# Visit http://localhost:3000' },
   ]
 
@@ -77,11 +78,36 @@ export default function DocsPage() {
               <Package className="w-8 h-8 text-yellow-400" />
               <h2 className="text-4xl font-black tracking-tighter">INSTALLATION</h2>
             </div>
-            <p className="text-white/60 text-lg">Choose your package manager:</p>
+            <p className="text-white/60 text-lg">No Node.js or npm required - just download and run:</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass-strong rounded-2xl p-8 border-2 border-green-500/30 mb-8"
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                <Zap className="w-6 h-6 text-green-400" />
+              </div>
+              <div>
+                <h3 className="text-xl font-black text-green-400 mb-2 uppercase tracking-tight">Standalone Executables</h3>
+                <p className="text-white/70 mb-4">
+                  Download a single file (~45 MB) with everything included. No installation, no dependencies.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <span className="text-sm bg-green-500/10 text-green-400 px-3 py-1 rounded-full">✓ No Node.js</span>
+                  <span className="text-sm bg-green-500/10 text-green-400 px-3 py-1 rounded-full">✓ No npm</span>
+                  <span className="text-sm bg-green-500/10 text-green-400 px-3 py-1 rounded-full">✓ Works offline</span>
+                  <span className="text-sm bg-green-500/10 text-green-400 px-3 py-1 rounded-full">✓ Portable</span>
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {installMethods.map((method, index) => (
+            {platforms.map((platform, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -92,23 +118,20 @@ export default function DocsPage() {
               >
                 <div className="flex items-center justify-between px-6 py-3 border-b border-white/10">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{method.icon}</span>
-                    <span className="font-bold text-white">{method.name}</span>
+                    <span className="text-2xl">{platform.icon}</span>
+                    <span className="font-bold text-white">{platform.name}</span>
                   </div>
-                  <button
-                    onClick={() => copyToClipboard(method.code, index)}
-                    className="flex items-center gap-2 text-white/60 hover:text-white transition-colors px-3 py-1 rounded-lg hover:bg-white/10"
+                  <a
+                    href={`/downloads/standalone/${platform.file}`}
+                    download
+                    className="flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors px-3 py-1 rounded-lg hover:bg-white/10"
                   >
-                    {copiedIndex === index ? (
-                      <Check className="w-4 h-4 text-green-400" />
-                    ) : (
-                      <Copy className="w-4 h-4" />
-                    )}
-                  </button>
+                    <Download className="w-4 h-4" />
+                  </a>
                 </div>
                 <div className="p-6 font-mono text-sm">
                   <span className="text-white/50">$ </span>
-                  <span className="text-yellow-400">{method.code}</span>
+                  <span className="text-yellow-400">{platform.code} create my-app</span>
                 </div>
               </motion.div>
             ))}
