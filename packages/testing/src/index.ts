@@ -1,8 +1,9 @@
-export * from './types.js';
-export * from './api.js';
-export * from './db.js';
-export * from './auth.js';
-export * from './fixtures.js';
+export type { TestAppConfig, TestApp } from './types.js';
+export { APITester, createAPITester } from './api.js';
+export type { RequestOptions, TestResponse } from './api.js';
+export { DatabaseTester, createDatabaseTester, createFixture } from './db.js';
+export { AuthTester, createAuthTester, createMockUser } from './auth.js';
+export { FixtureManager, fixtures, buildUser, buildPost, buildMany } from './fixtures.js';
 
 import { createAPITester } from './api.js';
 import { createDatabaseTester } from './db.js';

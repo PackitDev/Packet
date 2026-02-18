@@ -1,4 +1,6 @@
 export * from './types.js';
+export { BranchManager } from './branches.js';
+export { EnvironmentManager } from './environments.js';
 
 import simpleGit, { SimpleGit } from 'simple-git';
 import type { GitConfig, BranchInfo } from './types.js';

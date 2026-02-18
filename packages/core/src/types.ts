@@ -1,4 +1,4 @@
-export interface EffecTConfig {
+export interface PacketConfig {
   auth?: {
     provider: 'jwt' | 'session' | 'oauth' | 'magic-link';
     jwt?: {
@@ -38,8 +38,8 @@ export interface EffecTConfig {
   host?: string;
 }
 
-export interface EffecTApp {
-  config: EffecTConfig;
+export interface PacketApp {
+  config: PacketConfig;
   start(): Promise<void>;
   stop(): Promise<void>;
   getServer(): unknown;

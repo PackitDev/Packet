@@ -5,6 +5,6 @@ export default {
   out: './drizzle',
   driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL || 'postgresql://localhost:5432/effec_t_licenses',
+    connectionString: process.env.DATABASE_URL || 'postgresql://localhost:5432/packet_licenses',
   },
 } satisfies Config;

@@ -5,6 +5,7 @@ on:
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,13 +18,13 @@ jobs:
         include:
           - os: windows-latest
             artifact_name: Epoxy-Setup.exe
-            artifact_path: release/Epoxy Setup *.exe
+            artifact_path: release/*.exe
           - os: macos-latest
             artifact_name: Epoxy.dmg
-            artifact_path: release/Epoxy-*.dmg
+            artifact_path: release/*.dmg
           - os: ubuntu-latest
             artifact_name: Epoxy.AppImage
-            artifact_path: release/Epoxy-*.AppImage
+            artifact_path: release/*.AppImage
 
     steps:
       - name: Checkout code
@@ -40,8 +41,6 @@ jobs:
 
       - name: Build Electron app
         run: npm run electron:build
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4

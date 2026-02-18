@@ -32,7 +32,7 @@ npm run deploy
 │       └── auth/       # Authentication endpoints
 ├── src/                # Source code
 │   └── index.ts        # Application entry point
-├── effec-t.config.ts   # Packet SDK configuration
+├── packet.config.ts    # Packet SDK configuration
 └── package.json        # Dependencies
 ```
 

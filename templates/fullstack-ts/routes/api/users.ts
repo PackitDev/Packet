@@ -1,4 +1,4 @@
-import { db } from '@effec-t/db';
+import { db } from '@packet/db';
 
 // Define User model
 const User = db.model('User', {

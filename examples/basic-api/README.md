@@ -1,6 +1,6 @@
 # Basic API Example
 
-A simple REST API built with Effec-t SDK.
+A simple REST API built with Packet SDK.
 
 ## Features
 
@@ -72,6 +72,6 @@ basic-api/
 │           └── [id].ts
 ├── src/
 │   └── index.ts
-├── effec-t.config.ts
+├── packet.config.ts
 └── package.json
 ```

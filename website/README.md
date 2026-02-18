@@ -1,6 +1,6 @@
-# Effec-t SDK Website
+# Packet SDK Website
 
-High-quality landing page for the Effec-t SDK built with modern web technologies.
+High-quality landing page for the Packet SDK built with modern web technologies.
 
 ## Tech Stack
 
@@ -100,4 +100,4 @@ VITE_STRIPE_PUBLIC_KEY=pk_...
 
 ## License
 
-Proprietary - Part of Effec-t SDK
+Proprietary - Part of Packet SDK

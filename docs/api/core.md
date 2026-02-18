@@ -1,13 +1,13 @@
-# @effec-t/core API Reference
+# @packet/core API Reference
 
-The core runtime framework for Effec-t SDK.
+The core runtime framework for Packet SDK.
 
 ## createApp
 
-Create a new Effec-t application.
+Create a new Packet application.
 
 ```typescript
-import { createApp } from '@effec-t/core';
+import { createApp } from '@packet/core';
 
 const app = createApp({
   auth: {
@@ -32,10 +32,10 @@ await app.start();
 
 ## Configuration
 
-### EffecTConfig
+### PacketConfig
 
 ```typescript
-interface EffecTConfig {
+interface PacketConfig {
   auth?: AuthConfig;
   database?: DatabaseConfig;
   routes?: RouterConfig;
@@ -97,7 +97,7 @@ await app.start();
 ## Logger
 
 ```typescript
-import { logger } from '@effec-t/core';
+import { logger } from '@packet/core';
 
 logger.debug('Debug message');
 logger.info('Info message');
@@ -108,5 +108,5 @@ logger.error('Error message');
 Set log level:
 
 ```bash
-LOG_LEVEL=debug effec-t dev
+LOG_LEVEL=debug packet dev
 ```

@@ -9,13 +9,13 @@
     "deploy": "packet deploy"
   },
   "dependencies": {
-    "@effec-t/core": "^1.0.0-beta.1",
-    "@effec-t/auth": "^1.0.0-beta.1",
-    "@effec-t/db": "^1.0.0-beta.1",
-    "@effec-t/router": "^1.0.0-beta.1"
+    "@packet/core": "^1.0.0-beta.1",
+    "@packet/auth": "^1.0.0-beta.1",
+    "@packet/db": "^1.0.0-beta.1",
+    "@packet/router": "^1.0.0-beta.1"
   },
   "devDependencies": {
-    "@effec-t/testing": "^1.0.0-beta.1",
+    "@packet/testing": "^1.0.0-beta.1",
     "typescript": "^5.3.3",
     "tsx": "^4.7.0"
   }

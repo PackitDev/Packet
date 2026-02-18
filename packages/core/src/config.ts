@@ -1,11 +1,11 @@
 import { config as loadEnv } from 'dotenv';
-import type { EffecTConfig } from './types.js';
+import type { PacketConfig } from './types.js';
 
 // Load environment variables
 loadEnv();
 
-export function loadConfig(userConfig: Partial<EffecTConfig> = {}): EffecTConfig {
-  const defaultConfig: EffecTConfig = {
+export function loadConfig(userConfig: Partial<PacketConfig> = {}): PacketConfig {
+  const defaultConfig: PacketConfig = {
     port: parseInt(process.env.PORT || '3000', 10),
     host: process.env.HOST || '0.0.0.0',
     routes: {
@@ -27,7 +27,7 @@ export function loadConfig(userConfig: Partial<EffecTConfig> = {}): EffecTConfig
   };
 }
 
-export function validateConfig(config: EffecTConfig): void {
+export function validateConfig(config: PacketConfig): void {
   if (config.auth?.provider === 'jwt' && !config.auth.jwt?.secret) {
     throw new Error('JWT secret is required when using JWT authentication');
   }

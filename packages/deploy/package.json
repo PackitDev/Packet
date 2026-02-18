@@ -1,7 +1,7 @@
 {
-  "name": "@effec-t/deploy",
+  "name": "@packet/deploy",
   "version": "1.0.0-beta.1",
-  "description": "Deployment utilities for Effec-t SDK",
+  "description": "Deployment utilities for Packet SDK",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@effec-t/core": "workspace:*",
+    "@packet/core": "workspace:*",
     "execa": "^8.0.1",
     "dockerode": "^4.0.2"
   },

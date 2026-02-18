@@ -25,17 +25,22 @@ export default function AuthCallback() {
 
   const exchangeCodeForToken = async (code: string) => {
     try {
+      console.log('Exchanging code with backend:', import.meta.env.VITE_API_URL);
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/github`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code })
       });
 
+      console.log('Response status:', response.status);
+      const data = await response.json();
+      console.log('Response data:', data);
+
       if (!response.ok) {
-        throw new Error('Failed to exchange code for token');
+        throw new Error(data.error || 'Failed to exchange code for token');
       }
 
-      const { token } = await response.json();
+      const { token } = data;
       localStorage.setItem('packet_token', token);
       
       // Redirect to dashboard

@@ -1,4 +1,4 @@
-import { DatabaseConnection } from '@effec-t/db';
+import { DatabaseConnection } from '@packet/db';
 
 export class DatabaseTester {
   private connection: DatabaseConnection;

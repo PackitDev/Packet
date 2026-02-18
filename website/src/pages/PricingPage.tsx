@@ -2,31 +2,33 @@ import { Check, Zap, Star, Crown, Sparkles, ArrowRight, Shield, Clock, Users, Gi
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function PricingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const { user, login } = useAuth()
 
   const plans = [
     {
-      name: 'Early Access',
-      price: '$49',
-      originalPrice: '$99',
-      period: 'one-time',
-      badge: 'SAVE 50%',
+      name: 'Beta Access',
+      price: 'FREE',
+      originalPrice: '',
+      period: 'limited time',
+      badge: 'BETA',
       badgeColor: 'from-yellow-400 to-orange-500',
       icon: <Sparkles className="w-6 h-6" />,
-      description: 'Lock in the best price forever',
+      description: 'Free beta testing - help shape the future',
       features: [
         { text: 'Full beta access', highlight: true },
         { text: 'Lifetime v1.0 access', highlight: true },
-        { text: '50% off ALL future versions', highlight: true },
+        { text: 'Influence roadmap', highlight: true },
         { text: 'Priority support', highlight: false },
         { text: 'Early feature access', highlight: false },
-        { text: 'Influence roadmap', highlight: false },
+        { text: 'Bug bounty rewards', highlight: false },
         { text: 'Discord community', highlight: false },
         { text: 'All v1.0 features', highlight: false },
       ],
-      cta: 'Get Early Access',
+      cta: 'Join Beta',
       popular: true,
       gradient: 'from-yellow-400 via-orange-500 to-pink-500',
     },
@@ -100,12 +102,16 @@ export default function PricingPage() {
 
   const faqs = [
     {
-      q: 'What happens after I buy early access?',
-      a: 'You get immediate access to the beta, lifetime v1.0 access when it launches, and 50% off v2.0 ($49 instead of $99). You also get priority support and can influence the roadmap.',
+      q: 'Is beta access really free?',
+      a: 'Yes! Beta access is completely free. You get immediate access to test the framework, help find bugs, and shape the product. Plus, you keep v1.0 free forever when it launches.',
+    },
+    {
+      q: 'What do I get as a beta tester?',
+      a: 'Full access to the beta, priority support, ability to influence the roadmap, bug bounty rewards, and a lifetime v1.0 license when it officially launches.',
     },
     {
       q: 'Is v1.0 really free?',
-      a: 'Yes! After the early access period ends, v1.0 will be completely free with all features included. No limitations, no trial period, no credit card required.',
+      a: 'Yes! v1.0 will be completely free for everyone with all features included. Beta testers get it guaranteed. No limitations, no trial period, no credit card required.',
     },
     {
       q: 'Do I need to upgrade to v2.0?',
@@ -116,12 +122,8 @@ export default function PricingPage() {
       a: 'Absolutely! All licenses (including the free v1.0) can be used for commercial projects with no restrictions. Build and sell whatever you want.',
     },
     {
-      q: 'What about team licenses?',
-      a: 'Each developer needs their own license. For teams of 10+, contact us for volume pricing and enterprise features with dedicated support.',
-    },
-    {
-      q: 'Is there a refund policy?',
-      a: 'Yes! We offer a 30-day money-back guarantee. If you\'re not satisfied, we\'ll refund you in full, no questions asked.',
+      q: 'How long is beta access open?',
+      a: 'We\'re accepting a limited number of beta testers. Sign up now to secure your spot and lock in free v1.0 access forever.',
     },
   ]
 
@@ -130,24 +132,24 @@ export default function PricingPage() {
       {/* Hero Section */}
       <section className="py-24 sm:py-32 relative overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-orange-500/5 to-pink-500/5 pointer-events-none" />
-        <div className="absolute inset-0 noise pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 via-orange-500/5 to-pink-500/5 pointer-events-none will-change-transform" />
+        <div className="absolute inset-0 noise pointer-events-none opacity-30" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
             className="space-y-8"
           >
             {/* Badge */}
             <motion.div
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
-              className="inline-flex items-center gap-2 bg-yellow-500/10 border-2 border-yellow-500/30 rounded-full px-6 py-3"
+              className="inline-flex items-center gap-2 bg-green-500/10 border-2 border-green-500/30 rounded-full px-6 py-3"
             >
-              <Gift className="w-5 h-5 text-yellow-400" />
-              <span className="text-yellow-400 font-bold uppercase tracking-wide">Limited Time: 50% Off Early Access</span>
+              <Gift className="w-5 h-5 text-green-400" />
+              <span className="text-green-400 font-bold uppercase tracking-wide">Free Beta Access - Limited Spots</span>
             </motion.div>
 
             <h1 className="text-huge font-black tracking-tighter leading-none">
@@ -190,11 +192,11 @@ export default function PricingPage() {
             {plans.map((plan, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
-                className={`relative rounded-3xl overflow-hidden ${
+                transition={{ duration: 0.2, delay: index * 0.05 }}
+                whileHover={{ y: -4, transition: { duration: 0.15 } }}
+                className={`relative rounded-3xl overflow-hidden will-change-transform ${
                   plan.popular ? 'lg:scale-110 z-10' : ''
                 }`}
               >
@@ -241,15 +243,21 @@ export default function PricingPage() {
                   </ul>
 
                   {/* CTA Button */}
-                  <button
-                    className={`w-full py-4 rounded-2xl font-black uppercase tracking-wide transition-all ${
-                      plan.popular
-                        ? 'bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black hover:shadow-lg hover:shadow-orange-500/50 hover:scale-105'
-                        : 'bg-white/10 text-white hover:bg-white/20 border-2 border-white/10 hover:border-white/30'
-                    }`}
-                  >
-                    {plan.cta}
-                  </button>
+                  {plan.popular ? (
+                    <button
+                      onClick={user ? () => window.location.href = '/dashboard' : login}
+                      className="w-full py-4 rounded-2xl font-black uppercase tracking-wide transition-all bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-black hover:shadow-lg hover:shadow-orange-500/50 hover:scale-105"
+                    >
+                      {user ? 'Go to Dashboard' : plan.cta}
+                    </button>
+                  ) : (
+                    <button
+                      disabled
+                      className="w-full py-4 rounded-2xl font-black uppercase tracking-wide transition-all bg-white/10 text-white/40 border-2 border-white/10 cursor-not-allowed"
+                    >
+                      {plan.cta}
+                    </button>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -271,7 +279,7 @@ export default function PricingPage() {
             <h2 className="text-mega font-black mb-6 tracking-tighter">
               VERSION
               <br />
-              <span className="bg-gradient-to-r from-orange-400 via-yellow-400 via-pink-500 to-pink-600 bg-clip-text text-transparent">LIFECYCLE.</span>
+              <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 bg-clip-text text-transparent">LIFECYCLE.</span>
             </h2>
             <p className="text-xl text-white/60">
               Our unique pricing model rewards early adopters
@@ -373,23 +381,23 @@ export default function PricingPage() {
             viewport={{ once: true }}
             className="mt-12 glass-strong rounded-3xl p-8 border-yellow-500/30"
           >
-            <h3 className="text-2xl font-black mb-4 gradient-text">EARLY ACCESS = 50% OFF FOREVER</h3>
+            <h3 className="text-2xl font-black mb-4 gradient-text">BETA TESTERS GET v1.0 FREE FOREVER</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-white/80">
               <div className="flex items-center gap-3">
-                <Check className="w-5 h-5 text-yellow-400" />
-                <span>v2.0 for $49 (instead of $99)</span>
+                <Check className="w-5 h-5 text-green-400" />
+                <span>Free beta access right now</span>
               </div>
               <div className="flex items-center gap-3">
-                <Check className="w-5 h-5 text-yellow-400" />
-                <span>v3.0 for $75 (instead of $149)</span>
+                <Check className="w-5 h-5 text-green-400" />
+                <span>Lifetime v1.0 license when it launches</span>
               </div>
               <div className="flex items-center gap-3">
-                <Check className="w-5 h-5 text-yellow-400" />
-                <span>v4.0 for $100 (instead of $199)</span>
+                <Check className="w-5 h-5 text-green-400" />
+                <span>Help shape the product roadmap</span>
               </div>
               <div className="flex items-center gap-3">
-                <Check className="w-5 h-5 text-yellow-400" />
-                <span>All future versions at 50% off</span>
+                <Check className="w-5 h-5 text-green-400" />
+                <span>Priority support & bug bounties</span>
               </div>
             </div>
           </motion.div>

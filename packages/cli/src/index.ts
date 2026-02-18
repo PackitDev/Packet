@@ -13,8 +13,8 @@ import { envCommand } from './commands/env.js';
 const program = new Command();
 
 program
-  .name('effec-t')
-  .description('Effec-t SDK - Full-stack TypeScript framework')
+  .name('packet')
+  .description('Packet SDK - Full-stack TypeScript framework')
   .version('1.0.0-beta.1');
 
 // Register commands

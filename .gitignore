@@ -6,6 +6,8 @@ node_modules/
 dist/
 build/
 *.tsbuildinfo
+.build-tmp/
+.build-executable-tmp/
 
 # Environment variables
 .env
@@ -38,5 +40,9 @@ tmp/
 temp/
 *.tmp
 
+# Test projects (local testing only)
+test-projects/
+
 # License cache
 .effec-t/
+.packet/

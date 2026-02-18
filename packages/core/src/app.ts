@@ -3,21 +3,21 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import { Server } from 'http';
-import { checkVersion } from '@effec-t/license';
-import { createRouter } from '@effec-t/router';
+import { checkVersion } from '@packet/license';
+import { createRouter, type HttpMethod } from '@packet/router';
 import { loadConfig, validateConfig } from './config.js';
 import { logger } from './logger.js';
 import { LifecycleManager } from './lifecycle.js';
-import type { EffecTConfig, EffecTApp } from './types.js';
+import type { PacketConfig, PacketApp } from './types.js';
 
-export class EffecT implements EffecTApp {
-  public config: EffecTConfig;
+export class Packet implements PacketApp {
+  public config: PacketConfig;
   private lifecycle: LifecycleManager;
   private app: Express;
   private server: Server | null = null;
   private isRunning = false;
 
-  constructor(userConfig: Partial<EffecTConfig> = {}) {
+  constructor(userConfig: Partial<PacketConfig> = {}) {
     this.config = loadConfig(userConfig);
     this.lifecycle = new LifecycleManager();
     this.app = express();
@@ -61,7 +61,7 @@ export class EffecT implements EffecTApp {
     }
 
     try {
-      logger.info('Starting Effec-t application...');
+      logger.info('Starting Packet application...');
 
       // Check license
       await this.checkLicense();
@@ -92,7 +92,7 @@ export class EffecT implements EffecTApp {
       // Execute after start hooks
       await this.lifecycle.executeAfterStart();
 
-      logger.info('✓ Effec-t application started successfully');
+      logger.info('✓ Packet application started successfully');
     } catch (error) {
       logger.error('Failed to start application:', error);
       throw error;
@@ -107,29 +107,16 @@ export class EffecT implements EffecTApp {
       
       // Register all routes
       for (const route of router.routes) {
-        const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
+        const methods: HttpMethod[] = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
         
         for (const method of methods) {
           if (route.handlers[method]) {
-            const handler = route.handlers[method];
+            const handler = route.handlers[method]!;
             const expressMethod = method.toLowerCase() as 'get' | 'post' | 'put' | 'delete' | 'patch';
             
-            this.app[expressMethod](route.path, async (req: Request, res: Response, next: NextFunction) => {
-              try {
-                const result = await handler(req, res);
-                
-                // If handler didn't send response, send the result
-                if (!res.headersSent) {
-                  if (result !== undefined) {
-                    res.json(result);
-                  } else {
-                    res.status(204).end();
-                  }
-                }
-              } catch (error) {
-                next(error);
-              }
-            });
+            this.app[expressMethod](route.path, this.wrapHandler(handler));
+            
+            logger.debug(`  Route: ${method} ${route.path}`);
           }
         }
       }
@@ -138,6 +125,25 @@ export class EffecT implements EffecTApp {
     } catch (error) {
       logger.warn('No routes directory found or error loading routes:', error);
     }
+  }
+
+  private wrapHandler(handler: Function) {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const result = await handler(req, res);
+        
+        // If handler didn't send response, send the result
+        if (!res.headersSent) {
+          if (result !== undefined) {
+            res.json(result);
+          } else {
+            res.status(204).end();
+          }
+        }
+      } catch (error) {
+        next(error);
+      }
+    };
   }
 
   private setupErrorHandling(): void {
@@ -150,7 +156,7 @@ export class EffecT implements EffecTApp {
     });
 
     // Error handler
-    this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    this.app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
       logger.error('Request error:', err);
       
       res.status(500).json({
@@ -168,7 +174,7 @@ export class EffecT implements EffecTApp {
     }
 
     try {
-      logger.info('Stopping Effec-t application...');
+      logger.info('Stopping Packet application...');
 
       // Execute before stop hooks
       await this.lifecycle.executeBeforeStop();
@@ -188,7 +194,7 @@ export class EffecT implements EffecTApp {
       // Execute after stop hooks
       await this.lifecycle.executeAfterStop();
 
-      logger.info('✓ Effec-t application stopped successfully');
+      logger.info('✓ Packet application stopped successfully');
     } catch (error) {
       logger.error('Failed to stop application:', error);
       throw error;
@@ -213,11 +219,11 @@ export class EffecT implements EffecTApp {
 
       if (version.status === 'upgrade_available') {
         logger.warn(`New version available: ${version.latest}`);
-        logger.warn('Upgrade at: https://effec-t.dev/upgrade');
+        logger.warn('Upgrade at: https://packet-site.vercel.app/pricing');
       } else if (version.status === 'free') {
-        logger.info(`Using Effec-t v${version.version} (Free)`);
+        logger.info(`Using Packet v${version.version} (Free)`);
       } else if (version.status === 'licensed') {
-        logger.info(`Using Effec-t v${version.version} (Licensed)`);
+        logger.info(`Using Packet v${version.version} (Licensed)`);
       }
     } catch (error) {
       // License check is optional - continue without it
@@ -226,6 +232,6 @@ export class EffecT implements EffecTApp {
   }
 }
 
-export function createApp(config?: Partial<EffecTConfig>): EffecTApp {
-  return new EffecT(config);
+export function createApp(config?: Partial<PacketConfig>): PacketApp {
+  return new Packet(config);
 }

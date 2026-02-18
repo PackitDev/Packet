@@ -3,8 +3,10 @@ export interface User {
   email: string;
   password?: string;
   name?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  role?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  [key: string]: unknown;
 }
 
 export interface AuthConfig {
@@ -31,6 +33,8 @@ export interface AuthConfig {
   };
 }
 
-export interface AuthRequest extends Request {
+export interface AuthRequest {
+  headers?: Record<string, string | string[] | undefined>;
   user?: User;
+  [key: string]: unknown;
 }

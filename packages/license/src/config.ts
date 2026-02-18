@@ -1,9 +1,9 @@
 export const LICENSE_CONFIG = {
-  API_URL: process.env.EFFEC_T_LICENSE_API || 'https://api.effec-t.dev',
-  CACHE_DIR: '.effec-t',
+  API_URL: process.env.PACKET_LICENSE_API || 'https://packet-backend.onrender.com',
+  CACHE_DIR: '.packet',
   CACHE_FILE: 'license.json',
   CACHE_DURATION: 24 * 60 * 60 * 1000, // 24 hours
-  GRACE_PERIOD: 30 * 24 * 60 * 60 * 1000, // 30 days
-  MAX_ACTIVATIONS: 3,
+  GRACE_PERIOD: 7 * 24 * 60 * 60 * 1000, // 7 days (shorter for security)
+  MAX_ACTIVATIONS: 2, // 2 machines max (ultra locked down)
   CURRENT_VERSION: '1.0.0-beta.1',
 };

@@ -1,5 +1,5 @@
-import { auth } from '@effec-t/auth';
-import { db } from '@effec-t/db';
+import { auth } from '@packet/auth';
+import { db } from '@packet/db';
 
 const User = db.model('User', {
   email: { type: 'string', required: true, unique: true },

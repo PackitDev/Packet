@@ -1,4 +1,4 @@
-import { EffecTConfig } from '@effec-t/core';
+import { PacketConfig } from '@packet/core';
 
 export default {
   auth: {
@@ -17,4 +17,4 @@ export default {
   },
   port: parseInt(process.env.PORT || '3000'),
   host: process.env.HOST || '0.0.0.0',
-} satisfies EffecTConfig;
+} satisfies PacketConfig;

@@ -1,7 +1,7 @@
 {
   "name": "license-server",
   "version": "1.0.0-beta.1",
-  "description": "License and payment server for Effec-t SDK",
+  "description": "License and payment server for Packet SDK",
   "type": "module",
   "private": true,
   "scripts": {

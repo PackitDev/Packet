@@ -1,14 +1,5 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import type { User } from './types.js';
-
-export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, 10);
-}
-
-export async function comparePassword(password: string, hash: string): Promise<boolean> {
-  return bcrypt.compare(password, hash);
-}
 
 export interface JWTConfig {
   secret: string;
@@ -21,7 +12,7 @@ export interface JWTPayload {
   userId: string | number;
   email?: string;
   role?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface TokenPair {
@@ -29,15 +20,15 @@ export interface TokenPair {
   refreshToken: string;
 }
 
-export function generateToken(user: User, secret: string, expiresIn: string = '7d'): string {
+export function generateToken(user: User, secret: string, expiresIn = '7d'): string {
   return jwt.sign(
     {
       id: user.id,
       email: user.email,
       role: user.role,
-    },
+    } as object,
     secret,
-    { expiresIn }
+    { expiresIn: expiresIn as jwt.SignOptions['expiresIn'] }
   );
 }
 
@@ -50,22 +41,22 @@ export function verifyToken(token: string, secret: string): JWTPayload | null {
 }
 
 export function createToken(payload: JWTPayload, config: JWTConfig): string {
-  return jwt.sign(payload, config.secret, {
-    expiresIn: config.expiresIn || '7d',
+  return jwt.sign(payload as object, config.secret, {
+    expiresIn: (config.expiresIn || '7d') as jwt.SignOptions['expiresIn'],
     issuer: config.issuer,
     audience: config.audience,
   });
 }
 
 export function createTokenPair(payload: JWTPayload, config: JWTConfig): TokenPair {
-  const accessToken = jwt.sign(payload, config.secret, {
-    expiresIn: config.expiresIn || '15m',
+  const accessToken = jwt.sign(payload as object, config.secret, {
+    expiresIn: (config.expiresIn || '15m') as jwt.SignOptions['expiresIn'],
   });
 
   const refreshToken = jwt.sign(
-    { userId: payload.userId, type: 'refresh' },
+    { userId: payload.userId, type: 'refresh' } as object,
     config.secret,
-    { expiresIn: '7d' }
+    { expiresIn: '7d' as jwt.SignOptions['expiresIn'] }
   );
 
   return { accessToken, refreshToken };
@@ -74,7 +65,7 @@ export function createTokenPair(payload: JWTPayload, config: JWTConfig): TokenPa
 export function refreshAccessToken(refreshToken: string, config: JWTConfig): string {
   const payload = verifyToken(refreshToken, config.secret);
   
-  if (!payload || payload.type !== 'refresh') {
+  if (!payload || (payload as Record<string, unknown>).type !== 'refresh') {
     throw new Error('Invalid refresh token');
   }
 

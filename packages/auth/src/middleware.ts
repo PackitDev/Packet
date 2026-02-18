@@ -1,11 +1,10 @@
 import { verifyToken } from './jwt.js';
-import type { AuthConfig, AuthRequest } from './types.js';
+import type { AuthConfig, AuthRequest, User } from './types.js';
 
-// Extend Express Request type to include user
 declare global {
   namespace Express {
     interface Request {
-      user?: any;
+      user?: User;
     }
   }
 }
@@ -13,8 +12,8 @@ declare global {
 export function createAuthMiddleware(config: AuthConfig) {
   return async (req: AuthRequest, _res: unknown, next: () => void) => {
     if (config.provider === 'jwt') {
-      const headers = req.headers as unknown as Record<string, string>;
-      const authHeader = headers['authorization'];
+      const headers = req.headers as Record<string, string> | undefined;
+      const authHeader = headers?.['authorization'];
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return next();
       }
@@ -23,7 +22,7 @@ export function createAuthMiddleware(config: AuthConfig) {
       const payload = verifyToken(token, config.jwt!.secret);
 
       if (payload) {
-        req.user = payload;
+        req.user = payload as unknown as User;
       }
     }
 
@@ -31,7 +30,7 @@ export function createAuthMiddleware(config: AuthConfig) {
   };
 }
 
-export function protect(req: AuthRequest, res: any, next: () => void) {
+export function protect(req: AuthRequest, res: { status: (code: number) => { json: (data: unknown) => void } }, next: () => void) {
   if (!req.user) {
     return res.status(401).json({
       error: 'Unauthorized',
@@ -42,7 +41,7 @@ export function protect(req: AuthRequest, res: any, next: () => void) {
 }
 
 export function requireRole(...roles: string[]) {
-  return (req: AuthRequest, res: any, next: () => void) => {
+  return (req: AuthRequest, res: { status: (code: number) => { json: (data: unknown) => void } }, next: () => void) => {
     if (!req.user) {
       return res.status(401).json({
         error: 'Unauthorized',
@@ -50,7 +49,8 @@ export function requireRole(...roles: string[]) {
       });
     }
 
-    if (!req.user.role || !roles.includes(req.user.role)) {
+    const userRole = req.user.role;
+    if (!userRole || !roles.includes(userRole)) {
       return res.status(403).json({
         error: 'Forbidden',
         message: 'Insufficient permissions',
@@ -64,19 +64,19 @@ export function requireRole(...roles: string[]) {
 export function optionalAuth(config: AuthConfig) {
   return async (req: AuthRequest, _res: unknown, next: () => void) => {
     try {
-      const headers = req.headers as unknown as Record<string, string>;
-      const authHeader = headers['authorization'];
+      const headers = req.headers as Record<string, string> | undefined;
+      const authHeader = headers?.['authorization'];
       
       if (authHeader && authHeader.startsWith('Bearer ') && config.jwt?.secret) {
         const token = authHeader.substring(7);
         const payload = verifyToken(token, config.jwt.secret);
         if (payload) {
-          req.user = payload;
+          req.user = payload as unknown as User;
         }
       }
 
       next();
-    } catch (error) {
+    } catch {
       next();
     }
   };

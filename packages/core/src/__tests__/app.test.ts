@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { createApp } from '../app.js';
 
-describe('EffecT App', () => {
+describe('Packet App', () => {
   it('should create an app with default config', () => {
     const app = createApp();
     expect(app).toBeDefined();

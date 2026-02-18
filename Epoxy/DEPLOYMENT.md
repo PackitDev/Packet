@@ -16,7 +16,7 @@
 From the `Epoxy` directory:
 
 ```bash
-cd "S:\Effec-t SDK\Epoxy"
+cd "S:\Packet SDK\Epoxy"
 
 # Initialize git
 git init
@@ -47,7 +47,7 @@ GitHub Actions should be enabled by default, but verify:
 
 ```bash
 # Make sure you're in the Epoxy directory
-cd "S:\Effec-t SDK\Epoxy"
+cd "S:\Packet SDK\Epoxy"
 
 # Create and push a version tag
 git tag v1.0.0-beta.1

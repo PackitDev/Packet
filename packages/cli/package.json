@@ -1,10 +1,10 @@
 {
-  "name": "@effec-t/cli",
+  "name": "@packet/cli",
   "version": "1.0.0-beta.1",
-  "description": "CLI tool for Effec-t SDK",
+  "description": "CLI tool for Packet SDK",
   "type": "module",
   "bin": {
-    "effec-t": "./dist/index.js"
+    "packet": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -15,8 +15,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@effec-t/core": "workspace:*",
-    "@effec-t/license": "workspace:*",
+    "@packet/core": "workspace:*",
+    "@packet/license": "workspace:*",
+    "@packet/git": "workspace:*",
     "commander": "^12.0.0",
     "inquirer": "^9.2.15",
     "ora": "^8.0.1",

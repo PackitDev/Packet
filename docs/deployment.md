@@ -1,11 +1,11 @@
 # Deployment Guide
 
-Deploy your Effec-t application to production.
+Deploy your Packet application to production.
 
 ## Quick Deploy
 
 ```bash
-effec-t deploy
+packet deploy
 ```
 
 ## Supported Platforms
@@ -15,7 +15,7 @@ effec-t deploy
 Deploy with Docker and docker-compose:
 
 ```bash
-effec-t deploy --platform docker
+packet deploy --platform docker
 ```
 
 This generates:
@@ -31,30 +31,30 @@ docker-compose up -d
 ### Vercel (Coming Soon)
 
 ```bash
-effec-t deploy --platform vercel
+packet deploy --platform vercel
 ```
 
 ### AWS (Coming Soon)
 
 ```bash
-effec-t deploy --platform aws --region us-east-1
+packet deploy --platform aws --region us-east-1
 ```
 
 ### Railway (Coming Soon)
 
 ```bash
-effec-t deploy --platform railway
+packet deploy --platform railway
 ```
 
 ### Fly.io (Coming Soon)
 
 ```bash
-effec-t deploy --platform fly
+packet deploy --platform fly
 ```
 
 ## Environment Configuration
 
-Configure deployment in `effec-t.config.ts`:
+Configure deployment in `packet.config.ts`:
 
 ```typescript
 export default {
@@ -96,12 +96,12 @@ NODE_ENV=production
 Run migrations before deploying:
 
 ```bash
-effec-t db migrate --env production
+packet db migrate --env production
 ```
 
 ## Health Checks
 
-Effec-t automatically provides health check endpoints:
+Packet automatically provides health check endpoints:
 
 - `GET /health` - Basic health check
 - `GET /health/ready` - Readiness check
@@ -128,7 +128,7 @@ jobs:
           node-version: '18'
       - run: npm install
       - run: npm run build
-      - run: effec-t deploy --platform docker
+      - run: packet deploy --platform docker
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -140,10 +140,10 @@ Monitor your deployed application:
 
 ```bash
 # View logs
-effec-t logs --env production
+packet logs --env production
 
 # View metrics
-effec-t metrics --env production
+packet metrics --env production
 ```
 
 ## Rollback
@@ -151,7 +151,7 @@ effec-t metrics --env production
 Rollback to previous version:
 
 ```bash
-effec-t rollback --env production
+packet rollback --env production
 ```
 
 ## Best Practices

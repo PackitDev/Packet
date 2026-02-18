@@ -1,10 +1,8 @@
-import type { Express } from 'express';
-
 export class APITester {
-  private app: Express;
-  private baseURL: string;
+  public app: unknown;
+  public baseURL: string;
 
-  constructor(app: Express, baseURL: string = 'http://localhost:3000') {
+  constructor(app: unknown, baseURL = 'http://localhost:3000') {
     this.app = app;
     this.baseURL = baseURL;
   }
@@ -25,65 +23,30 @@ export class APITester {
     return this.request('DELETE', path, options);
   }
 
-  private async request(method: string, path: string, options: RequestOptions): Promise<TestResponse> {
-    // Mock request/response for testing
-    const mockReq: any = {
-      method,
-      path,
-      url: path,
-      headers: options.headers || {},
-      body: options.body,
-      query: options.query || {},
-      params: {},
-    };
-
-    const mockRes: any = {
-      statusCode: 200,
+  private async request(_method: string, _path: string, _options: RequestOptions): Promise<TestResponse> {
+    // Simplified mock for now - will use supertest in full implementation
+    return {
+      status: 200,
       headers: {},
       body: null,
-      status(code: number) {
-        this.statusCode = code;
-        return this;
-      },
-      json(data: any) {
-        this.body = data;
-        return this;
-      },
-      send(data: any) {
-        this.body = data;
-        return this;
-      },
-      setHeader(key: string, value: string) {
-        this.headers[key] = value;
-        return this;
-      },
-    };
-
-    // Find matching route in Express app
-    // This is a simplified version - real implementation would need to match routes properly
-    
-    return {
-      status: mockRes.statusCode,
-      headers: mockRes.headers,
-      body: mockRes.body,
-      json: () => mockRes.body,
+      json: () => null,
     };
   }
 }
 
 export interface RequestOptions {
   headers?: Record<string, string>;
-  body?: any;
+  body?: unknown;
   query?: Record<string, string>;
 }
 
 export interface TestResponse {
   status: number;
   headers: Record<string, string>;
-  body: any;
-  json(): any;
+  body: unknown;
+  json(): unknown;
 }
 
-export function createAPITester(app: Express): APITester {
+export function createAPITester(app: unknown): APITester {
   return new APITester(app);
 }

@@ -1,4 +1,4 @@
-import { createToken, JWTPayload, JWTConfig } from '@effec-t/auth';
+import { createToken, JWTPayload, JWTConfig } from '@packet/auth';
 
 export class AuthTester {
   private config: JWTConfig;

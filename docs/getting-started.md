@@ -1,16 +1,16 @@
-# Getting Started with Effec-t SDK
+# Getting Started with Packet SDK
 
-Welcome to Effec-t SDK! This guide will help you create your first full-stack application in under 2 minutes.
+Welcome to Packet SDK! This guide will help you create your first full-stack application in under 2 minutes.
 
 ## Installation
 
 ```bash
-npm install -g @effec-t/cli
+npm install -g @packet/cli
 ```
 
 ## Early Access
 
-Effec-t is currently in **paid early access** at $49 (one-time payment).
+Packet is currently in **paid early access** at $49 (one-time payment).
 
 **Benefits:**
 - Shape the product with your feedback
@@ -18,19 +18,19 @@ Effec-t is currently in **paid early access** at $49 (one-time payment).
 - 50% discount on v2.0 ($49 instead of $99)
 - Priority support during beta
 
-[Get Early Access →](https://effec-t.dev/early-access)
+[Get Early Access →](https://packetsdk.dev/early-access)
 
 ## Create Your First Project
 
 ```bash
 # Create a new project
-effec-t create my-app
+packet create my-app
 
 # Navigate to project
 cd my-app
 
 # Start development server
-effec-t dev
+packet dev
 ```
 
 The CLI will guide you through:
@@ -48,7 +48,7 @@ my-app/
 │   └── pages/          # Frontend pages (if full-stack)
 ├── src/
 │   └── index.ts        # Application entry point
-├── effec-t.config.ts   # Effec-t configuration
+├── packet.config.ts    # Packet configuration
 ├── .env                # Environment variables
 └── package.json
 ```
@@ -85,7 +85,7 @@ This creates:
 Add authentication to your app:
 
 ```typescript
-// effec-t.config.ts
+// packet.config.ts
 export default {
   auth: {
     provider: 'jwt',
@@ -100,7 +100,7 @@ export default {
 Protect routes:
 
 ```typescript
-import { auth } from '@effec-t/auth';
+import { auth } from '@packet/auth';
 
 export const GET = auth.protect(async (req) => {
   return {
@@ -115,7 +115,7 @@ export const GET = auth.protect(async (req) => {
 Define models with type-safe queries:
 
 ```typescript
-import { db } from '@effec-t/db';
+import { db } from '@packet/db';
 
 const User = db.model('User', {
   id: db.uuid().primary(),
@@ -134,7 +134,7 @@ const user = await User.create({ email: '...', name: '...' });
 Deploy your app with one command:
 
 ```bash
-effec-t deploy
+packet deploy
 ```
 
 Supported platforms:
@@ -150,13 +150,13 @@ Manage branches and environments:
 
 ```bash
 # Create feature branch
-effec-t feature user-authentication
+packet feature user-authentication
 
 # List environments
-effec-t env list
+packet env list
 
 # Deploy to staging
-effec-t deploy staging
+packet deploy staging
 ```
 
 ## Next Steps
@@ -164,11 +164,11 @@ effec-t deploy staging
 - [API Reference](./api/)
 - [Deployment Guide](./deployment.md)
 - [Examples](../examples/)
-- [Join Discord](https://discord.gg/effec-t)
+- [Join Discord](https://discord.gg/packet)
 
 ## Need Help?
 
-- 📚 [Documentation](https://effec-t.dev/docs)
-- 💬 [Discord Community](https://discord.gg/effec-t)
-- 🐛 [Report Issues](https://github.com/effec-t/sdk/issues)
-- 📧 [Email Support](mailto:support@effec-t.dev)
+- 📚 [Documentation](https://packetsdk.dev/docs)
+- 💬 [Discord Community](https://discord.gg/packet)
+- 🐛 [Report Issues](https://github.com/packet/sdk/issues)
+- 📧 [Email Support](mailto:support@packetsdk.dev)

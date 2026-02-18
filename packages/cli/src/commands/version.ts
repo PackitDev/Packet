@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { checkVersion } from '@effec-t/license';
+import { checkVersion } from '@packet/license';
 import { logger } from '../utils/logger.js';
 
 export function versionCommand(): Command {
@@ -11,7 +11,7 @@ export function versionCommand(): Command {
       try {
         const version = await checkVersion();
 
-        logger.info(`Effec-t v${version.version}`);
+        logger.info(`Packet v${version.version}`);
 
         if (version.status === 'free') {
           logger.log('Status: Free version');
@@ -19,7 +19,7 @@ export function versionCommand(): Command {
           logger.log('Status: Licensed');
         } else if (version.status === 'upgrade_available') {
           logger.warn(`New version available: v${version.latest}`);
-          logger.log('Upgrade at: https://effec-t.dev/upgrade');
+          logger.log('Upgrade at: https://packet-site.vercel.app/pricing');
         }
       } catch (error) {
         logger.error(`Failed to check version: ${error instanceof Error ? error.message : 'Unknown error'}`);

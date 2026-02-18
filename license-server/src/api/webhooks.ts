@@ -38,7 +38,7 @@ router.post('/stripe', async (req: Request, res: Response) => {
         }
 
         // Generate license key
-        const licenseKey = `EFFEC-T-${nanoid(16).toUpperCase()}`;
+        const licenseKey = `PACKET-${nanoid(16).toUpperCase()}`;
 
         // Create license
         await db.insert(licenses).values({

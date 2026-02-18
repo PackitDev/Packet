@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { activateLicense, getCachedLicense, deactivateLicense } from '@effec-t/license';
+import { activateLicense, getCachedLicense, deactivateLicense } from '@packet/license';
 import { logger } from '../utils/logger.js';
 import { withSpinner } from '../utils/spinner.js';
 
@@ -36,7 +36,7 @@ export function licenseCommand(): Command {
 
         if (!key) {
           logger.error('Please provide a license key');
-          logger.log('Usage: effec-t license <key>');
+          logger.log('Usage: packet license <key>');
           process.exit(1);
         }
 

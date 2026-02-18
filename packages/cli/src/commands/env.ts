@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { BranchManager, EnvironmentManager } from '@effec-t/git';
+import { BranchManager, EnvironmentManager } from '@packet/git';
 import { logger } from '../utils/logger.js';
 
 export function envCommand(): Command {

@@ -4,18 +4,18 @@ import { motion } from 'framer-motion';
 export default function DashboardDownloads() {
   const downloads = [
     {
-      platform: 'macOS',
-      icon: <Apple className="w-8 h-8" />,
-      description: 'For macOS 10.15 or later',
-      file: 'packet-cli-macos.pkg',
-      color: 'from-blue-400 to-indigo-500',
-    },
-    {
       platform: 'Windows',
       icon: <Monitor className="w-8 h-8" />,
       description: 'For Windows 10 or later',
       file: 'packet-cli-windows.exe',
       color: 'from-green-400 to-emerald-500',
+    },
+    {
+      platform: 'macOS',
+      icon: <Apple className="w-8 h-8" />,
+      description: 'For macOS 10.15 or later',
+      file: 'packet-cli-macos.pkg',
+      color: 'from-blue-400 to-indigo-500',
     },
     {
       platform: 'Linux',

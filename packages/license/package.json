@@ -1,7 +1,7 @@
 {
-  "name": "@effec-t/license",
+  "name": "@packet/license",
   "version": "1.0.0-beta.1",
-  "description": "License validation for Effec-t SDK",
+  "description": "License validation for Packet SDK",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

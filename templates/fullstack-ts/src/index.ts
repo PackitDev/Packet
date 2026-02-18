@@ -1,6 +1,6 @@
-import { createApp } from '@effec-t/core';
-import { db } from '@effec-t/db';
-import config from '../effec-t.config.js';
+import { createApp } from '@packet/core';
+import { db } from '@packet/db';
+import config from '../packet.config.js';
 
 // Initialize database connection
 if (config.database) {

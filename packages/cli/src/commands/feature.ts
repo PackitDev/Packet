@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { BranchManager } from '@effec-t/git';
+import { BranchManager } from '@packet/git';
 import { logger } from '../utils/logger.js';
 
 export function featureCommand(): Command {

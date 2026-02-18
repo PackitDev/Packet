@@ -3,10 +3,14 @@ export interface DeployConfig {
   env?: Record<string, string>;
   region?: string;
   project?: string;
+  projectPath?: string;
+  name?: string;
+  production?: boolean;
 }
 
 export interface DeployResult {
   success: boolean;
   url?: string;
   error?: string;
+  logs?: string;
 }

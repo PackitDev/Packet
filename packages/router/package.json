@@ -1,7 +1,7 @@
 {
-  "name": "@effec-t/router",
+  "name": "@packet/router",
   "version": "1.0.0-beta.1",
-  "description": "File-system based routing for Effec-t SDK",
+  "description": "File-system based routing for Packet SDK",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -12,7 +12,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@effec-t/core": "workspace:*",
     "express": "^4.18.2",
     "fastify": "^4.26.0",
     "chokidar": "^3.6.0"

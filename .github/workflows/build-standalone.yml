@@ -1,0 +1,171 @@
+name: Build Standalone Executables
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (e.g., 1.0.0-beta.1)'
+        required: true
+        default: '1.0.0-beta.1'
+
+jobs:
+  build:
+    name: Build Standalone Executables
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows
+            ext: .exe
+          - os: macos-latest
+            platform: macos
+            ext: ''
+          - os: ubuntu-latest
+            platform: linux
+            ext: ''
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build packages
+        run: pnpm build
+      
+      - name: Install pkg
+        run: npm install -g pkg
+      
+      - name: Build standalone executable
+        run: pnpm build:standalone
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: packet-${{ matrix.platform }}
+          path: |
+            dist/standalone/packet-*${{ matrix.ext }}
+            dist/standalone/*.sh
+            dist/standalone/*.bat
+            dist/standalone/*.md
+          retention-days: 30
+
+  package:
+    name: Package and Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/standalone
+      
+      - name: Reorganize artifacts
+        run: |
+          mkdir -p dist/standalone-final
+          find dist/standalone -type f -exec cp {} dist/standalone-final/ \;
+          ls -lah dist/standalone-final/
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Package executables
+        run: |
+          # Move artifacts to expected location
+          mkdir -p dist/standalone
+          cp -r dist/standalone-final/* dist/standalone/
+          
+          # Run packaging script
+          pnpm package:standalone
+      
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: Packet SDK v${{ steps.version.outputs.version }}
+          draft: false
+          prerelease: ${{ contains(steps.version.outputs.version, 'beta') || contains(steps.version.outputs.version, 'alpha') }}
+          files: |
+            dist/packages/*.zip
+            dist/packages/*.tar.gz
+            dist/packages/SHA256SUMS.txt
+            dist/packages/DISTRIBUTION.md
+          body: |
+            # Packet SDK v${{ steps.version.outputs.version }}
+            
+            ## 📦 Standalone Executables
+            
+            Download the appropriate file for your platform:
+            
+            - **Windows**: `packet-windows-x64-v${{ steps.version.outputs.version }}.zip`
+            - **macOS (Intel)**: `packet-macos-x64-v${{ steps.version.outputs.version }}.tar.gz`
+            - **macOS (Apple Silicon)**: `packet-macos-arm64-v${{ steps.version.outputs.version }}.tar.gz`
+            - **Linux**: `packet-linux-x64-v${{ steps.version.outputs.version }}.tar.gz`
+            
+            ## ✨ What's New
+            
+            See [CHANGELOG.md](./CHANGELOG.md) for details.
+            
+            ## 📚 Documentation
+            
+            - [Quick Start Guide](./docs/STANDALONE_QUICK_START.md)
+            - [Full Documentation](https://packetsdk.dev/docs)
+            
+            ## 🔐 License
+            
+            Requires a valid Packet SDK license key.
+            Get yours at: https://packetsdk.dev/pricing
+            
+            ## ✅ Checksums
+            
+            See `SHA256SUMS.txt` for file verification.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Upload to S3 (Optional)
+        if: env.AWS_ACCESS_KEY_ID != ''
+        run: |
+          # Upload to S3 for CDN distribution
+          aws s3 sync dist/packages/ s3://downloads.packetsdk.dev/v${{ steps.version.outputs.version }}/ --acl public-read
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1

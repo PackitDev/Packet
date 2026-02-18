@@ -26,7 +26,7 @@ export function setupOAuth(config: AuthConfig): void {
           clientSecret: config.oauth.google.clientSecret,
           callbackURL: config.oauth.google.callbackURL,
         },
-        async (accessToken, refreshToken, profile, done) => {
+        async (_accessToken, _refreshToken, profile, done) => {
           try {
             const user: OAuthUser = {
               id: profile.id,
@@ -54,7 +54,7 @@ export function setupOAuth(config: AuthConfig): void {
           clientSecret: config.oauth.github.clientSecret,
           callbackURL: config.oauth.github.callbackURL,
         },
-        async (accessToken: string, refreshToken: string, profile: any, done: any) => {
+        async (_accessToken: string, _refreshToken: string, profile: any, done: any) => {
           try {
             const user: OAuthUser = {
               id: profile.id,
@@ -83,7 +83,7 @@ export function setupOAuth(config: AuthConfig): void {
   });
 }
 
-export function getOAuthMiddleware() {
+export function getOAuthMiddleware(): { initialize: ReturnType<typeof passport.initialize>; session: ReturnType<typeof passport.session> } {
   return {
     initialize: passport.initialize(),
     session: passport.session(),

@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { getCachedLicense } from '@effec-t/license';
+import { getCachedLicense } from '@packet/license';
 import { logger } from '../utils/logger.js';
 import chalk from 'chalk';
 
@@ -13,7 +13,7 @@ export function upgradeCommand(): Command {
         const cached = await getCachedLicense();
 
         logger.log('');
-        logger.log(chalk.bold('Effec-t SDK Upgrade Options'));
+        logger.log(chalk.bold('Packet SDK Upgrade Options'));
         logger.log('');
 
         if (cached?.license.isEarlyAccess) {
@@ -38,7 +38,7 @@ export function upgradeCommand(): Command {
         logger.log('  Performance monitoring');
         logger.log(cached?.license.isEarlyAccess ? '  ' + chalk.yellow('Your price: $49') : '');
         logger.log('');
-        logger.log('Visit https://effec-t.dev/upgrade for more information');
+        logger.log('Visit https://packet-site.vercel.app/pricing for more information');
       } catch (error) {
         logger.error(`Failed to show upgrade options: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }

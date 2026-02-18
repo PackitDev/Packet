@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import { writeFile, mkdir } from 'fs/promises';
+import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import type { DeployConfig, DeployResult } from '../types.js';
 
@@ -23,7 +23,7 @@ export async function deployVercel(config: DeployConfig): Promise<DeployResult> 
 
     // Deploy to Vercel
     const deployCommand = config.production ? 'vercel --prod' : 'vercel';
-    const { stdout, stderr } = await execAsync(deployCommand, {
+    const { stdout } = await execAsync(deployCommand, {
       cwd: config.projectPath || process.cwd(),
     });
 
